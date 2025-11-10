@@ -1,0 +1,7 @@
+.env
+*.pem
+*.csv 
+.*
+!.gitignore
+!.dockerignore
+__pycache__

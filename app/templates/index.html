@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Agent Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <!-- 사이드바 -->
+            <div class="col-md-3 bg-primary text-white p-0">
+                <div class="p-4">
+                    <h4><i class="bi bi-robot"></i> LLM Agent</h4>
+                    <p class="mb-0">AI Assistant with RAG</p>
+                </div>
+                
+                <div class="p-3">
+                    <div class="card bg-light bg-opacity-10 border-0 mb-3">
+                        <div class="card-body">
+                            <h6 class="text-white">예시 질문 입니다~!</h6>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-light btn-sm" onclick="setQuery('What is LangChain?')">
+                                    LangChain이란?
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" onclick="setQuery('What is LangGraph?')">
+                                    LangGraph란?
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" onclick="setQuery('What is FastAPI?')">
+                                    FastAPI란?
+                                </button>
+                                <button class="btn btn-outline-light btn-sm" onclick="setQuery('What is Elasticsearch?')">
+                                    Elasticsearch란?
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 채팅 초기화 버튼 -->
+                    <button class="btn btn-outline-light btn-sm w-100" onclick="clearChat()">
+                        <i class="bi bi-trash"></i> 채팅 기록 삭제
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 메인 채팅 영역 -->
+            <div class="col-md-9 d-flex flex-column p-0" style="height: 100vh;">
+                <!-- 헤더 -->
+                <div class="bg-white border-bottom p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0"><i class="bi bi-chat-dots"></i> AI Assistant</h3>
+                        <span class="badge bg-success">Online</span>
+                    </div>
+                </div>
+                
+                <!-- 채팅 메시지 영역 -->
+                <div class="flex-grow-1 overflow-auto p-3" style="max-height: calc(100vh - 140px);" id="chatMessages">
+                    <!-- 환영 메시지 (채팅 기록이 없을 때만 표시) -->
+                    {% if not chat_history %}
+                    <div class="d-flex mb-3">
+                        <div class="bg-success rounded-circle p-2 me-2">
+                            <i class="bi bi-robot text-white"></i>
+                        </div>
+                        <div class="bg-white rounded p-3 shadow-sm">
+                            <p class="mb-1">안녕하세요! LangChain과 RAG를 활용한 AI Assistant입니다.</p>
+                            <small class="text-muted">방금 전</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- 채팅 기록 표시 -->
+                    {% for message in chat_history %}
+                        {% if message.type == "human" %}
+                        <!-- 사용자 메시지 -->
+                        <div class="d-flex mb-3 justify-content-end">
+                            <div class="bg-primary text-white rounded p-3 shadow-sm">
+                                <p class="mb-1">{{ message.content }}</p>
+                                <small class="text-light">사용자</small>
+                            </div>
+                            <div class="bg-primary rounded-circle p-2 ms-2">
+                                <i class="bi bi-person-fill text-white"></i>
+                            </div>
+                        </div>
+                        {% elif message.type == "ai" %}
+                        <!-- AI 메시지 -->
+                        <div class="d-flex mb-3">
+                            <div class="bg-success rounded-circle p-2 me-2">
+                                <i class="bi bi-robot text-white"></i>
+                            </div>
+                            <div class="bg-white rounded p-3 shadow-sm">
+                                <p class="mb-1">{{ message.content }}</p>
+                                <small class="text-muted">AI</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <!-- 에러 메시지 -->
+                    {% if not success and error %}
+                    <div class="d-flex mb-3">
+                        <div class="bg-danger rounded-circle p-2 me-2">
+                            <i class="bi bi-exclamation-triangle text-white"></i>
+                        </div>
+                        <div class="bg-danger bg-opacity-10 border border-danger rounded p-3">
+                            <p class="mb-1 text-danger"><strong>오류:</strong> {{ error }}</p>
+                            <small class="text-muted">방금 전</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- 입력 폼 -->
+                <div class="bg-white border-top p-3">
+                    <form method="post" action="/chat" id="chatForm">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="query" id="queryInput" 
+                                   placeholder="메시지를 입력하세요..." required>
+                            <button class="btn btn-primary" type="submit" id="sendButton">
+                                <i class="bi bi-send"></i> 전송
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 예시 질문 설정
+        function setQuery(query) {
+            document.getElementById('queryInput').value = query;
+            document.getElementById('queryInput').focus();
+        }
+        
+        // 채팅 기록 삭제
+        async function clearChat() {
+            if (confirm('채팅 기록을 모두 삭제하시겠습니까?')) {
+                try {
+                    await fetch('/clear-chat', { method: 'POST' });
+                    location.reload();
+                } catch (error) {
+                    alert('채팅 기록 삭제에 실패했습니다.');
+                }
+            }
+        }
+        
+        // 폼 제출 시 로딩 상태
+        document.getElementById('chatForm').addEventListener('submit', function() {
+            const button = document.getElementById('sendButton');
+            const input = document.getElementById('queryInput');
+            
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>전송 중...';
+            
+            // 입력창 비우기
+            setTimeout(() => {
+                input.value = '';
+                button.disabled = false;
+                button.innerHTML = '<i class="bi bi-send"></i> 전송';
+            }, 300);
+        });
+        
+        // 페이지 로드 시 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            const queryInput = document.getElementById('queryInput');
+            const chatMessages = document.getElementById('chatMessages');
+            queryInput.focus();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+        
+        // Enter 키로 전송
+        document.getElementById('queryInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                document.getElementById('chatForm').submit();
+            }
+        });
+    </script>
+</body>
+</html>

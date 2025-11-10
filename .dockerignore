@@ -1,0 +1,24 @@
+.env
+*.pem
+*.csv 
+.*
+.venv
+!.gitignore
+!.dockerignore
+__pycache__
+
+# 가상 환경 폴더 (어느 경로에 있든 모두 제외)
+**/.venv
+**/venv
+**/env
+
+# 파이썬 캐시 파일
+**/__pycache__
+**/*.pyc
+
+# IDE 및 에디터 설정 폴더
+**/.vscode
+**/.idea
+
+# Git 폴더
+.git

@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.19.1
+  #   container_name: elasticsearch_final
+  #   environment:
+  #     - xpack.security.enabled=false
+  #     - discovery.type=single-node
+  #   ports:
+  #     - "9200:9200"
+  #   volumes:
+  #     - esdata:/usr/share/elasticsearch/data
+
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:8.19.1
+  #   container_name: kibana_final
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #   ports:
+  #     - "5601:5601"
+  #   depends_on:
+  #     - elasticsearch
+  redis:
+    image: "redis/redis-stack-server:latest"    # 공식 Redis 이미지 (경량 alpine 버전)
+    container_name: mcp-redis  # 컨테이너에 고유한 이름 부여
+    ports:
+      - "6379:6379"            # 로컬 PC의 6379 포트와 컨테이너의 6379 포트를 연결
+    volumes:
+      - redis-data:/data       # Redis 데이터를 영속적으로 보관하기 위한 볼륨 설정
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      # docker compose ps 를 통해 Status를 확인할 수 있다.
+      # docker inspect --format="{{json .State.Health}}" mcp_server_final 를 활용해서 어떤 것들이 문제인지 알 수 있다.
+      # wget 같은 경우 pip 와 관련있는게 아니라서 Dockerfile에 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/* 작성해줘야 한다.
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  mcp:
+    build: ./mcp
+    container_name: mcp_server_final
+    ports:
+      - "8001:8001"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
+    volumes:
+      - ./mcp:/mcp
+    # mcp 서버가 정상적으로 실행 중인지 확인하는 healthcheck 추가
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8001/health || exit 1"]
+      # docker compose ps 를 통해 Status를 확인할 수 있다.
+      # docker inspect --format="{{json .State.Health}}" mcp_server_final 를 활용해서 어떤 것들이 문제인지 알 수 있다.
+      # wget 같은 경우 pip 와 관련있는게 아니라서 Dockerfile에 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/* 작성해줘야 한다.
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    env_file:
+      .env
+
+  api:
+    build: ./app
+    container_name: fastapi_llm_agent_final
+    ports:
+      - "8000:8000"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
+    volumes:
+      - ./app:/app
+    # mcp 서비스가 'healthy' 상태가 된 후에 api 서비스를 시작하도록 설정
+    depends_on:
+      mcp:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    
+      
+    env_file:
+      .env
+ # 더 만들기
+volumes:
+  esdata:
+  redis-data:

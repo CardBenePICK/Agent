@@ -1,0 +1,15 @@
+
+############### mcp-server/main.py ###############
+$ uvicorn main:app --port 8001 --reload
+
+visual studio code에서 Ctrl + Shift + P를 눌러 MCP: 서버추가 를 선택하여
+Copilot Chat의 Agent 모드에서 확인해봅니다.
+mcp.json에 아래 내용을 추가하세요.
+{
+	"servers": {
+		"mcp": {
+			"url": "http://localhost:8001/mcp",
+			"type": "http"
+		}
+	}
+}

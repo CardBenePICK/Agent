@@ -1,0 +1,15 @@
+
+LangChain is an open-source framework designed to help developers build applications with Large Language Models (LLMs).
+It provides a standard interface for chains, lots of integrations with other tools, and end-to-end chains for common applications.
+
+LangGraph is a library for building stateful, multi-actor applications with LLMs, modeling steps as nodes and edges in a graph.
+It extends the LangChain Expression Language with the ability to coordinate multiple chains across multiple steps of computation.
+
+FastAPI is a modern, high-performance web framework for building APIs with Python.
+It is based on standard Python type hints and provides automatic API documentation.
+
+Elasticsearch is a distributed search and analytics engine, which can also serve as a powerful vector store for RAG.
+It provides scalable full-text search and supports vector similarity search for semantic retrieval.
+
+LangSmith is a platform for debugging, testing, and monitoring AI applications.
+It helps developers trace, evaluate, and monitor their LangChain applications in production.
