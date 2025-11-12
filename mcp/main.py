@@ -32,7 +32,8 @@ llm = ChatOpenAI(
 chat = ChatOpenAI( # get_sale에서 사용할 llm
     model="openai/gpt-oss-120b",  # Hugging Face Router의 모델
     openai_api_key=HF_API_KEY,
-    openai_api_base="https://router.huggingface.co/v1"  # base_url 대신 사용
+    openai_api_base="https://router.huggingface.co/v1",  # base_url 대신 사용
+    temperature=0
 )
 
 with open('prompt/prompt.json', 'r', encoding='utf-8') as f:
@@ -41,9 +42,11 @@ with open('prompt/prompt.json', 'r', encoding='utf-8') as f:
     print("prompt_json을 불러왔습니다." + prompt_data["get_sale"][:20])
 
 @app.get("/sale", operation_id ="get_sale_value")
-def get_sale(merchant: str, amount: int = None) -> Dict[str, Any]:
+def get_sale(username :str, merchant: str, amount: int = None) -> Dict[str, Any]:
     """
     사용처와 사용금액을 이용해서 가장 혜택이 높은 카드를 추천합니다.
+
+    만약 사용자의 이름을 모르겠으면 get_user_name tool을 사용합니다.
     """
     start_time = time.perf_counter()
     print(f"get_sale func start time {datetime.now()}" )
@@ -61,9 +64,11 @@ def get_sale(merchant: str, amount: int = None) -> Dict[str, Any]:
     # 카드 혜택 비교하고 카드 추천하기
     answer = invoke_question(llm=chat, prompt=prompt_data["get_sale"], context="", question=question)
 
-    print("llm 대답", answer) 
+    
     # answer에는 딕셔너리 모양의 str type이 반환됨.
     data_dict = json.loads(answer)
+    data_dict["username"] = username
+    print("llm 대답", data_dict) 
 
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
@@ -73,6 +78,14 @@ def get_sale(merchant: str, amount: int = None) -> Dict[str, Any]:
         return data_dict
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"오류 발생: {str(e)}")
+
+@app.get("/user_name", operation_id ="get_user_name")
+def get_user_name() -> str:
+    """
+        사용자의 이름을 알아냅니다.
+    """
+
+    return "오방일"
 
 @app.get("/health", status_code=status.HTTP_200_OK)
 def health_check():

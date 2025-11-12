@@ -5,3 +5,5 @@
 !.gitignore
 !.dockerignore
 __pycache__
+main_back_up.py
+db.py

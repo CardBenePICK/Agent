@@ -33,7 +33,7 @@ services:
       # docker compose ps 를 통해 Status를 확인할 수 있다.
       # docker inspect --format="{{json .State.Health}}" mcp_server_final 를 활용해서 어떤 것들이 문제인지 알 수 있다.
       # wget 같은 경우 pip 와 관련있는게 아니라서 Dockerfile에 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/* 작성해줘야 한다.
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
       start_period: 30s
@@ -56,7 +56,7 @@ services:
       # docker compose ps 를 통해 Status를 확인할 수 있다.
       # docker inspect --format="{{json .State.Health}}" mcp_server_final 를 활용해서 어떤 것들이 문제인지 알 수 있다.
       # wget 같은 경우 pip 와 관련있는게 아니라서 Dockerfile에 RUN apt-get update && apt-get install -y wget && rm -rf /var/lib/apt/lists/* 작성해줘야 한다.
-      interval: 10s
+      interval: 20s
       timeout: 5s
       retries: 5
       start_period: 30s
