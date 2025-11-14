@@ -40,7 +40,7 @@ def invoke_question(llm : ChatOpenAI, prompt, context, question):
 # https://www.card-gorilla.com/card/detail/2851 이건 유의 사항 대분류에만 할인 한도, 전월실적 등이 적혀있음. 
 
 context_str = """
-결제날짜 : 2025-09-06 (KST)
+결제날짜 : 2025-09-06 토요일 (KST)
 결제시간 : 19:08:54
 
 1. 
