@@ -30,8 +30,8 @@ rate_limiter = InMemoryRateLimiter(requests_per_second=10)
 #     rate_limiter=rate_limiter
 # )
 chat = ChatOpenAI( # get_sale에서 사용할 llm
-    model="Qwen/Qwen3-8B",
-    # model="openai/gpt-oss-120b",  # Hugging Face Router의 모델
+    # model="Qwen/Qwen3-8B",
+    model="openai/gpt-oss-120b",  # Hugging Face Router의 모델
     openai_api_key=HF_API_KEY,
     openai_api_base="https://router.huggingface.co/v1",  # base_url 대신 사용
     temperature=0
