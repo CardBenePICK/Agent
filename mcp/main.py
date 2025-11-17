@@ -9,6 +9,7 @@ import json
 from tool_extra.recommend_llm import invoke_question
 import time
 from datetime import datetime
+from db_tools.repo import get_mcc_code_by_merchant
 
 load_dotenv()
 app = FastAPI(title="Weather & Stock MCP Server")
@@ -102,6 +103,24 @@ def head_health_check():
     FastAPI는 HEAD 요청에 대해 자동으로 body 없는 응답을 처리합니다.
     """
     return Response() # 빈 응답을 보내면 FastAPI가 알아서 처리해줍니다.
+
+
+@app.get("/get_mcc_code", operation_id="get_mcc_code")
+def get_mcc_code(merchant_name: str):
+    """
+    주어진 `merchant_name`으로 DB에서 MCC 코드를 조회하고 반환합니다.
+
+    단순 조회 동작만 수행합니다.
+    """
+    try:
+        mcc_code = get_mcc_code_by_merchant(merchant_name)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"DB query error: {str(e)}")
+
+    if mcc_code is None:
+        raise HTTPException(status_code=404, detail=f"MCC code not found for merchant: {merchant_name}")
+
+    return {"merchant_name": merchant_name, "mcc_code": int(mcc_code)}
 
 mcp = FastApiMCP(
     app,
