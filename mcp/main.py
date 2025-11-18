@@ -9,7 +9,7 @@ import json
 from tool_extra.recommend_llm import invoke_question
 import time
 from datetime import datetime
-from db_tools.repo import get_mcc_code_by_merchant, get_benefits_by_user_assets_and_mcc, get_total_cardbenefit_by_mcc
+from db_tools.repo import get_mcc_code_by_merchant, get_benefits_by_user_assets_and_mcc,get_user_benefit_limit_in_benefit_sum
 
 load_dotenv()
 app = FastAPI(title="Weather & Stock MCP Server")
@@ -137,6 +137,20 @@ def get_benefits_by_mcc(user_id : int, mcc : int):
         raise HTTPException(status_code=404, detail=f"No benefits found for user_id: {user_id} and mcc: {mcc}")
 
     return benefits_df.to_dict(orient="records")
+
+@app.get("/get_user_benefit_limit", operation_id="get_user_benefit_limit")
+def get_user_benefit_limit(user_id: int):
+    """
+    해당 user가 이번 기간에 적용받은 모든 혜택의 금액을 조회해서 반환합니다.
+    """
+    try:
+        user_benefits_df = get_user_benefit_limit_in_benefit_sum(user_id)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"DB query error: {str(e)}")
+    if user_benefits_df.empty:
+        raise HTTPException(status_code=404, detail=f"No benefit limits found for user_id: {user_id}")
+    
+    return user_benefits_df.to_dict(orient="records")
 
 
 mcp = FastApiMCP(

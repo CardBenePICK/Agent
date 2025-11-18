@@ -108,25 +108,38 @@ def get_user_card_list(user_id : int) -> list:
 def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
     """
     user_assets에서 주어진 user_id의 external_card_id를 서브쿼리로 사용하여
-    card_benefit와 조인 후, 주어진 mcc가 포함된 혜택 행을 반환합니다.
+    card_benefit와 card_master를 조인 후, 주어진 mcc가 포함된 혜택 행을 반환합니다.
 
-    반환되는 컬럼: BENEFIT_ID, card_id, category, summary, json_rawdata, mcc_code
+    반환되는 컬럼: BENEFIT_ID, card_id, category, summary, json_rawdata, mcc_code, json_notice
     """
     # Use the exact SQL query form that works in MySQL Workbench
     # JSON_CONTAINS needs the second parameter as a JSON string literal like '"1111"'
     mcc_json_str = f'"{str(mcc)}"'  # converts 1111 to '"1111"'
     print(mcc_json_str)
     sql = f"""
-        SELECT cb.BENEFIT_ID, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code
+        SELECT cm.card_name, cb.BENEFIT_ID, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code, cm.json_notice
         FROM card_benefit cb
         JOIN (
             SELECT DISTINCT external_account_id AS card_id
             FROM user_assets
             WHERE user_id = %s
         ) ua ON cb.card_id = ua.card_id
+        JOIN card_master cm ON cb.card_id = cm.card_id
         WHERE JSON_CONTAINS(cb.mcc_code, %s, '$')
         ORDER BY cb.BENEFIT_ID
     """
-    
+    print("얘도호출하나2?")
     benefit_df = df(sql, (user_id, mcc_json_str))
+    return benefit_df
+
+def get_user_benefit_limit_in_benefit_sum(user_id: int) -> pd.DataFrame:
+    """
+    해당 user가 이번 기간에 적용받은 모든 혜택의 금액과 횟수를 조회해서 반환합니다.
+    """
+    print("얘도호출하나?")
+    sql = """
+    SELECT * FROM benefit_sum
+    WHERE user_id = %s"""
+
+    benefit_df = df(sql, (user_id,))
     return benefit_df
