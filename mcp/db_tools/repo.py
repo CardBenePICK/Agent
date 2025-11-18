@@ -1,18 +1,31 @@
 from typing import Any, Dict, Iterable, Optional
 import pandas as pd
 from .db_mysql import get_conn
+import json
 
-def one_col(sql: str, params: Optional[Iterable[Any]] = None) -> map:
+def one_col(sql: str, params: Optional[Iterable[Any]] = None) -> list:
+    print(f"ONE_COL SQL: {sql}")
+    print(f"ONE_COL PARAMS: {params}")
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(sql, params or ())
         rows = cur.fetchall()
-    return map(lambda x: x[0], rows)
+        print(f"ONE_COL RAW ROWS: {rows}")
+    print("row도 궁금하다", rows)
+    result = [row[0] for row in rows]
+    print(f"ONE_COL FINAL RESULT: {result}")
+    return result
 
 def df(sql: str, params: Optional[Iterable[Any]] = None) -> pd.DataFrame:
+    print(f"EXECUTING SQL: {sql}")
+    print(f"WITH PARAMS: {params}")
     with get_conn() as conn, conn.cursor() as cur:
         cur.execute(sql, params or ())
         rows = cur.fetchall()
-    return pd.DataFrame(rows)
+        # 컬럼명 가져오기
+        columns = [desc[0] for desc in cur.description]
+    print(f"QUERY RETURNED {len(rows)} rows")
+    print(f"COLUMNS: {columns}")
+    return pd.DataFrame(rows, columns=columns)
 
 def one(sql: str, params: Optional[Iterable[Any]] = None) -> Optional[Dict]:
     with get_conn() as conn, conn.cursor() as cur:
@@ -67,12 +80,17 @@ def get_total_cardbenefit_by_mcc(user_id : int, mcc : int) -> pd.DataFrame:
         get_mcc_code_by_merchant 함수로 mcc를 구하여서 관련된 모든 혜택 내용을 검색한다.
     """
     user_cardlist = get_user_card_list(user_id)
+    print("이거야",user_cardlist)
+    
+    # JSON_CONTAINS를 위해 '"1111"' 형식으로 변환
+    mcc_json_param = f'"{str(mcc)}"'
+    print(f"MCC JSON PARAM: {mcc_json_param}")
     
     benefit_df = df("""
         SELECT *
         FROM card_benefit
         WHERE JSON_CONTAINS(mcc_code, %s, '$') and card_id in %s;
-    """, (str(mcc), user_cardlist))
+    """, (mcc_json_param, user_cardlist))
 
     return benefit_df
 
@@ -82,7 +100,33 @@ def get_user_card_list(user_id : int) -> list:
     """
 
     return tuple(one_col("""
-            SELECT card_id
-            FROM user_card_temp
+            SELECT external_account_id
+            FROM user_assets
             WHERE user_id = %s;
-        """, (user_id)))
+        """, (user_id,)))
+
+def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
+    """
+    user_assets에서 주어진 user_id의 external_card_id를 서브쿼리로 사용하여
+    card_benefit와 조인 후, 주어진 mcc가 포함된 혜택 행을 반환합니다.
+
+    반환되는 컬럼: BENEFIT_ID, card_id, category, summary, json_rawdata, mcc_code
+    """
+    # Use the exact SQL query form that works in MySQL Workbench
+    # JSON_CONTAINS needs the second parameter as a JSON string literal like '"1111"'
+    mcc_json_str = f'"{str(mcc)}"'  # converts 1111 to '"1111"'
+    print(mcc_json_str)
+    sql = f"""
+        SELECT cb.BENEFIT_ID, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code
+        FROM card_benefit cb
+        JOIN (
+            SELECT DISTINCT external_account_id AS card_id
+            FROM user_assets
+            WHERE user_id = %s
+        ) ua ON cb.card_id = ua.card_id
+        WHERE JSON_CONTAINS(cb.mcc_code, %s, '$')
+        ORDER BY cb.BENEFIT_ID
+    """
+    
+    benefit_df = df(sql, (user_id, mcc_json_str))
+    return benefit_df
