@@ -9,7 +9,7 @@ import json
 from tool_extra.recommend_llm import invoke_question
 import time
 from datetime import datetime
-from db_tools.repo import get_mcc_code_by_merchant
+from db_tools.repo import get_mcc_code_by_merchant, get_benefits_by_user_assets_and_mcc, get_total_cardbenefit_by_mcc
 
 load_dotenv()
 app = FastAPI(title="Weather & Stock MCP Server")
@@ -121,6 +121,23 @@ def get_mcc_code(merchant_name: str):
         raise HTTPException(status_code=404, detail=f"MCC code not found for merchant: {merchant_name}")
 
     return {"merchant_name": merchant_name, "mcc_code": int(mcc_code)}
+
+@app.get("/get_benefits_by_mcc", operation_id="get_benefits_by_mcc")
+def get_benefits_by_mcc(user_id : int, mcc : int):
+    """
+    주어진 user_id와 mcc 코드를 사용하여 관련된 혜택 정보를 DB에서 조회하고 반환합니다.
+    사용자가 가진 카드와 결제 상황에 매칭되는 모든 혜택을 조회합니다.
+    """
+    try:
+        benefits_df = get_benefits_by_user_assets_and_mcc(user_id, mcc)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"DB query error: {str(e)}")
+
+    if benefits_df.empty:
+        raise HTTPException(status_code=404, detail=f"No benefits found for user_id: {user_id} and mcc: {mcc}")
+
+    return benefits_df.to_dict(orient="records")
+
 
 mcp = FastApiMCP(
     app,
