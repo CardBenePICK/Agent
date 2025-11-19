@@ -1,34 +1,43 @@
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain_core.output_parsers import StrOutputParser
-from langchain_openai import ChatOpenAI
+import requests
+import os
+from dotenv import load_dotenv
 
-def invoke_question(llm : ChatOpenAI, prompt, context, question):
-    # 전달받은 context 사용 (하드코딩 제거)
+load_dotenv()
+LOCAL_LLM_URL = os.getenv("LOCAL_LLM_URL")
+
+API_URL = f"http://{LOCAL_LLM_URL}/api/chat"  # Docker 호스트/로컬에서 테스트
+API_URL = "http://182.226.200.232:11434/api/chat"
+# API_URL = "http://localhost:11434/api/chat"  # Docker 호스트/로컬에서 테스트
+
+def invoke_question(llm_model : str, prompt, context, question):
+    context = context_str # 횬재는 임의로 사용.
     try:
         
-        question_answering_promt = ChatPromptTemplate.from_messages(
-            [
-                (
-                    "system",
-                    prompt
-                ),
-                MessagesPlaceholder(variable_name="messages"),
-            ]
-        )
-        chain = question_answering_promt | llm | StrOutputParser()
-    
-        messages = [
-            ("human", question),
-        ]
+        payload = {
+            "model": llm_model,
+            "messages": [
+                # 시스템 프롬프트 추가: 모델의 역할을 정의
+                {"role": "system", "content": prompt},
+                
+                # 컨텍스트가 추가된 사용자 메시지
+                {"role": "user", "content": f""" 
+                    Context : {context} \n
 
-    
-        answer = chain.invoke(
-            {
-                "messages": messages,
-                "context": context,  # 실제 전달받은 context 사용
-            }
-        )
-        return answer
+                    --- 
+
+
+                    Question : {question} \n
+                   
+
+                """}
+            ],
+            "stream": False,
+            "format": "json"
+        }
+
+        response = requests.post(API_URL, json=payload)
+        ans = response.json()
+        return ans['message']["content"]
     except Exception as e:
         print(f"오류가 발생했습니다: {e}")
         return {}
@@ -188,3 +197,13 @@ card name : 가온올림카드(실속형)
 - 대중교통(버스, 지하철), 이동통신요금자동납부, 해외이용금액은 추가 적립 제외(단, 택시는 추가 적립 가능합니다.)
 
 """
+
+if __name__ == "__main__":
+    import json
+    with open('C:/ITStudy/Project/Final/CardBenePICK/mcp/prompt/prompt.json', 'r', encoding='utf-8') as f:
+        prompt_data = json.load(f)
+
+        print("prompt_json을 불러왔습니다." + prompt_data["get_sale_local"][:20])
+    question ="편의점에서 80000원 사용 예정. 카드 추천 해줘."
+    answer = invoke_question(llm_model="qwen3:8b", prompt=prompt_data["get_sale_local"], context="", question=question)
+    print(answer)

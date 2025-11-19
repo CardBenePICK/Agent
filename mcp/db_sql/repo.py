@@ -72,7 +72,7 @@ def get_total_cardbenefit_by_mcc(user_id : int, mcc : int) -> pd.DataFrame:
         SELECT *
         FROM card_benefit
         WHERE JSON_CONTAINS(mcc_code, %s, '$') and card_id in %s;
-    """, (str(mcc), user_cardlist))
+    """, (f'\"{str(mcc)}\"', user_cardlist))
 
     return benefit_df
 
