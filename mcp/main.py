@@ -162,5 +162,6 @@ mcp = FastApiMCP(
 # /mcp 경로에 MCP 서버를 마운트합니다.
 mcp.mount_http(mount_path="/mcp") 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    # import uvicorn
+    # uvicorn.run(app, host="0.0.0.0", port=8001)
+    get_sale("bangbang", "GS25", 128000)
