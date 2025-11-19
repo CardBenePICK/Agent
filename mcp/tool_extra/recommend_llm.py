@@ -3,7 +3,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 
 def invoke_question(llm : ChatOpenAI, prompt, context, question):
-    context = context_str # 횬재는 임의로 사용.
+    # 전달받은 context 사용 (하드코딩 제거)
     try:
         
         question_answering_promt = ChatPromptTemplate.from_messages(
@@ -25,7 +25,7 @@ def invoke_question(llm : ChatOpenAI, prompt, context, question):
         answer = chain.invoke(
             {
                 "messages": messages,
-                "context": context,
+                "context": context,  # 실제 전달받은 context 사용
             }
         )
         return answer
