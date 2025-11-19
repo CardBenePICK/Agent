@@ -9,7 +9,7 @@ import json
 import pandas as pd
 from tool_extra.recommend_llm import invoke_question
 import time
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from db_tools.repo import get_mcc_code_by_merchant, get_benefits_by_user_assets_and_mcc,get_user_benefit_limit_in_benefit_sum
 
 load_dotenv()
@@ -77,7 +77,7 @@ def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
                 result += f"{col_name}: {value}\n"
         
         # 혜택 적용 내역 섹션
-        result += "\n사용자 혜택 적용 내역:\n"
+        result += "\n사용자가 기간별 적용받은 혜택 내역:\n"
         result += "-" * 30 + "\n"
         for col_name, korean_name in benefit_usage_cols.items():
             if col_name in benefits_df.columns:
@@ -91,7 +91,7 @@ def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
 @app.get("/sale", operation_id ="get_sale_value")
 def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) -> Dict[str, Any]:
     """
-    가맹점 이름과 결제금액, 사용자 보유 카드 혜택을 이용하여 가장 결제 금액이 저렴한 카드와 결제 정보를 반환합니다.
+    가맹점 이름과 결제금액, 결제 시각, 사용자 보유 카드 혜택을 이용하여 가장 결제 금액이 저렴한 카드와 결제 정보를 반환합니다.
 
     이 함수를 실행하기 전 필수 정보 수집 과정:
     1. user_id을 모르면 get_user_id() 도구를 먼저 사용하세요
@@ -100,7 +100,7 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
     """
     print("여기 안들어온다고???????????????????????????????????????????????")
     start_time = time.perf_counter()
-    print(f"get_sale func start time {datetime.now()}" )
+    print(f"get_sale func start time {datetime.now(timezone(timedelta(hours=9)))}" )
 
     print("디버깅을 한번 해봅시다~")
     print("user_id:", user_id)
@@ -121,8 +121,9 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
         # 마크다운 형식으로 변환
         benefits_markdown = format_benefits_to_markdown(benefits_df)
         
-        # 현재 시각을 결제 시각으로 사용
-        current_time = datetime.now()
+        # 현재 시각을 결제 시각으로 사용 (한국시간 UTC+9)
+        kst = timezone(timedelta(hours=9))
+        current_time = datetime.now(kst)
         payment_time = current_time.strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
         weekday = ["월", "화", "수", "목", "금", "토", "일"][current_time.weekday()]
         
@@ -141,6 +142,8 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
 # 📈 분석 요청
 위 정보를 바탕으로 가장 혜택이 높은 카드를 추천해주세요.
 각 카드의 혜택율, 한도, 현재 사용량을 고려하여 실제 절약 금액을 계산해주세요.
+현재 시간까지 고려해서 혜택 적용 가능한지 한번 더 체크하세요.
+예를 들어서 신한 Mr.Life 카드를 16시에 결제 요청한다면 사용 불가능합니다.
         """
         
         print(f"📊 완전한 마크다운 context:")
