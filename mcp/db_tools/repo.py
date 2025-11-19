@@ -70,7 +70,7 @@ def get_mcc_code_by_merchant(merchant : str) -> int:
         WHERE REPLACE(merchant_name, ' ', '') = 
             REPLACE(%s, ' ', '');
     """, (merchant))
-    if mcc_code :
+    if mcc_code:
         return mcc_code[0]
     return None
     
@@ -108,16 +108,26 @@ def get_user_card_list(user_id : int) -> list:
 def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
     """
     user_assets에서 주어진 user_id의 external_card_id를 서브쿼리로 사용하여
-    card_benefit와 card_master를 조인 후, 주어진 mcc가 포함된 혜택 행을 반환합니다.
+    card_benefit와 card_master, benefit_sum을 조인 후, 주어진 mcc가 포함된 혜택 행을 반환합니다.
+    benefit_sum 테이블과 조인하여 사용자별 혜택 적용 현황도 함께 가져옵니다.
 
-    반환되는 컬럼: BENEFIT_ID, card_id, category, summary, json_rawdata, mcc_code, json_notice
+    반환되는 컬럼: card_benefit의 모든 컬럼 + card_master의 card_name, json_notice + benefit_sum의 사용 현황
     """
     # Use the exact SQL query form that works in MySQL Workbench
     # JSON_CONTAINS needs the second parameter as a JSON string literal like '"1111"'
     mcc_json_str = f'"{str(mcc)}"'  # converts 1111 to '"1111"'
     print(mcc_json_str)
-    sql = f"""
-        SELECT cm.card_name, cb.BENEFIT_ID, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code, cm.json_notice
+    sql = """
+        SELECT cb.benefit_id, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code,
+               cm.card_name, cm.json_notice, 
+               COALESCE(bs.day_amount, 0) as day_amount, 
+               COALESCE(bs.day_count, 0) as day_count, 
+               COALESCE(bs.week_amount, 0) as week_amount, 
+               COALESCE(bs.week_count, 0) as week_count, 
+               COALESCE(bs.month_amount, 0) as month_amount, 
+               COALESCE(bs.month_count, 0) as month_count, 
+               COALESCE(bs.year_amount, 0) as year_amount, 
+               COALESCE(bs.year_count, 0) as year_count
         FROM card_benefit cb
         JOIN (
             SELECT DISTINCT external_account_id AS card_id
@@ -125,11 +135,15 @@ def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
             WHERE user_id = %s
         ) ua ON cb.card_id = ua.card_id
         JOIN card_master cm ON cb.card_id = cm.card_id
+        LEFT JOIN benefit_sum bs ON bs.user_id = %s AND bs.benefit_id = cb.benefit_id
         WHERE JSON_CONTAINS(cb.mcc_code, %s, '$')
-        ORDER BY cb.BENEFIT_ID
+        ORDER BY cb.benefit_id
     """
-    print("얘도호출하나2?")
-    benefit_df = df(sql, (user_id, mcc_json_str))
+    print("얜호출되나?")
+    benefit_df = df(sql, (user_id, user_id, mcc_json_str))
+    print("이거 디버깅")
+    print(benefit_df)
+    benefit_df.to_csv("debug_benefit_df.csv")
     return benefit_df
 
 def get_user_benefit_limit_in_benefit_sum(user_id: int) -> pd.DataFrame:
