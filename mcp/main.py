@@ -160,7 +160,7 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
 **가맹점:** {merchant}
 **금액:** {amount:,}원
 
-오류: {str(e)}
+오류: {str(e)} 
         """
     
     # 카드 혜택 비교하고 카드 추천하기
