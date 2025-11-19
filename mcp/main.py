@@ -7,6 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.rate_limiters import InMemoryRateLimiter
 import json
 from tool_extra.recommend_llm import invoke_question
+from tool_extra.recommend_local_llm import invoke_question
 import time
 from datetime import datetime
 from db_tools.repo import get_mcc_code_by_merchant
@@ -64,7 +65,8 @@ def get_sale(username :str, merchant: str, amount: int = None) -> Dict[str, Any]
     
     
     # 카드 혜택 비교하고 카드 추천하기
-    answer = invoke_question(llm=chat, prompt=prompt_data["get_sale"], context="", question=question)
+    # answer = invoke_question(llm=chat, prompt=prompt_data["get_sale"], context="", question=question)
+    answer = invoke_question(llm_model="qwen3:8b", prompt=prompt_data["get_sale_local"], context="", question=question)
 
     
     # answer에는 딕셔너리 모양의 str type이 반환됨.
@@ -131,5 +133,6 @@ mcp = FastApiMCP(
 # /mcp 경로에 MCP 서버를 마운트합니다.
 mcp.mount_http(mount_path="/mcp") 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    # import uvicorn
+    # uvicorn.run(app, host="0.0.0.0", port=8001)
+    get_sale("bangbang", "GS25", 128000)
