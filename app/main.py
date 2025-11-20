@@ -5,6 +5,7 @@ from typing import List, Optional
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 
@@ -41,6 +42,13 @@ from starlette.requests import Request
 app = FastAPI(title="LLM Agent API")
 # app.add_middleware(CProfileMiddleware)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 개발 중이므로 모든 출처 허용 (보안상 나중에 프론트 주소로 특정하는 것이 좋음)
+    allow_credentials=True,
+    allow_methods=["*"],  # 모든 HTTP 메서드 허용 (GET, POST, OPTIONS 등)
+    allow_headers=["*"],  # 모든 헤더 허용
+)
 
 templates = Jinja2Templates(directory="templates")
 
@@ -163,6 +171,58 @@ async def chat(request: Request, query: str = Form(...)):
             "error": error,
         },
     )
+
+@app.post("/chat_react") # response_class=HTMLResponse 제거
+async def chat(request: Request, query: str = Form(...)):
+    start_time = time.perf_counter()
+    global agent_app
+    if agent_app is None:
+        agent_app = await create_agent_app()
+
+    # messages: System + history + 현재 사용자 질문
+    history = get_history()
+    messages: List[BaseMessage] = [SystemMessage(content=SYSTEM_PROMPT)] + history + [HumanMessage(content=query)]
+
+    # 변수 초기화
+    ai_text = ""
+    success = False
+    error = ""
+
+    try:
+        # create_react_agent는 {"messages": [...]} 입력을 받습니다.
+        print(f"agent_app invoke time {datetime.now()}" )
+        result = await agent_app.ainvoke({"messages": messages})
+        state_messages: List[BaseMessage] = result.get("messages", [])
+        ai_text = pick_last_ai_text(state_messages) or ""
+
+        # 메모리에 저장
+        chat_memory.chat_memory.add_user_message(query)
+        chat_memory.chat_memory.add_ai_message(ai_text)
+
+        success = True
+        
+    except Exception as e:
+        success = False
+        error = str(e)
+        print(f"Error during chat processing: {e}")
+
+    end_time = time.perf_counter()
+    elapsed_time = end_time - start_time
+    print(f"app chat 함수 실행 시간: {elapsed_time:.4f}초")
+
+    print("chat_react : 답변",{
+        "success": success,
+        "response": ai_text,
+        "error": error,
+        "cards": [] # 필요하다면 나중에 카드 데이터를 여기에 추가
+    })
+    # React 프론트엔드를 위한 JSON 응답 반환
+    return {
+        "success": success,
+        "response": ai_text,
+        "error": error,
+        "cards": [] # 필요하다면 나중에 카드 데이터를 여기에 추가
+    }
 
 
 @app.post("/clear-chat")
