@@ -44,6 +44,21 @@ with open('prompt/prompt.json', 'r', encoding='utf-8') as f:
 
     print("prompt_json을 불러왔습니다." + prompt_data["get_sale"][:20])
 
+def merge_context(items):
+    """
+    JSON 리스트의 각 항목을 merge_context 방식으로 텍스트로 변환
+    """
+    parts = []
+    for item in items:
+        for key, value in item.items():
+            if isinstance(value, list):
+                # 리스트일 경우 각 항목을 줄바꿈으로 합침
+                if value:
+                    parts.append('\n'.join(value))
+            elif value:  # 문자열 등 일반 값
+                parts.append(str(value))
+    return '\n'.join(parts)
+
 def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
     """
     혜택 DataFrame의 모든 정보를 그대로 유지하며 benefit별로만 구분선을 추가
@@ -67,22 +82,49 @@ def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
             'month_amount': '월간 혜택 적용 금액',
             'month_count': '월간 혜택 적용 횟수',
             'year_amount': '연간 혜택 적용 금액',
-            'year_count': '연간 혜택 적용 횟수'
+            'year_count': '연간 혜택 적용 횟수',
+            'prev_month_total': '전월 카드 사용 실적'
         }
         
         # 혜택 적용 내역이 아닌 컬럼들 먼저 출력
         for col_name in benefits_df.columns:
             if col_name not in benefit_usage_cols:
                 value = row[col_name]
-                result += f"{col_name}: {value}\n"
+                
+                # json_rawdata와 json_notice 컬럼은 특별히 처리
+                if col_name in ['json_rawdata', 'json_notice'] and value:
+                    result += f"{col_name}:\n"
+                    try:
+                        # JSON 문자열을 파싱
+                        json_data = json.loads(value) if isinstance(value, str) else value
+                        
+                        # merge_context 방식으로 처리
+                        if isinstance(json_data, list):
+                            merged_text = merge_context(json_data)
+                            result += f"  {merged_text}\n"
+                        # 딕셔너리인 경우 그대로 출력
+                        elif isinstance(json_data, dict):
+                            result += f"  {json.dumps(json_data, ensure_ascii=False, indent=4)}\n"
+                        # 그 외의 경우 원본 그대로
+                        else:
+                            result += f"  {json_data}\n"
+                    except (json.JSONDecodeError, TypeError):
+                        # JSON 파싱 실패시 원본 그대로 출력
+                        result += f"  {value}\n"
+                else:
+                    result += f"{col_name}: {value}\n"
         
         # 혜택 적용 내역 섹션
-        result += "\n사용자가 기간별 적용받은 혜택 내역:\n"
-        result += "-" * 30 + "\n"
+        result += "\n사용자가 기간별 적용받은 혜택 내역 및 카드 사용 실적:\n"
+        result += "-" * 50 + "\n"
         for col_name, korean_name in benefit_usage_cols.items():
             if col_name in benefits_df.columns:
                 value = row[col_name]
-                result += f"{korean_name}: {value}\n"
+                # 금액 관련 컬럼은 천단위 구분자 추가
+                if 'amount' in col_name or 'total' in col_name:
+                    result += f"{korean_name}: {value:,}원\n"
+                else:
+                    result += f"{korean_name}: {value}\n"
         
         result += "\n" + "-" * 80 + "\n\n"
     
@@ -91,24 +133,25 @@ def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
 @app.get("/sale", operation_id ="get_sale_value")
 def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) -> Dict[str, Any]:
     """
-    가맹점 이름과 결제금액, 결제 시각, 사용자 보유 카드 혜택을 이용하여 가장 결제 금액이 저렴한 카드와 결제 정보를 반환합니다.
+    가맹점 이름과 결제금액, 사용자 보유 카드 혜택을 이용하여 가장 결제 금액이 저렴한 카드와 결제 정보를 반환합니다.
 
     이 함수를 실행하기 전 필수 정보 수집 과정:
     1. user_id을 모르면 get_user_id() 도구를 먼저 사용하세요
     2. merchant의 MCC 코드가 필요하면 get_mcc_code() 도구를 사용하세요
     3. 모든 정보가 수집되면 이 함수를 호출하여 최종 카드를 추천받으세요
     """
-    print("여기 안들어온다고???????????????????????????????????????????????")
     start_time = time.perf_counter()
     print(f"get_sale func start time {datetime.now(timezone(timedelta(hours=9)))}" )
 
-    print("디버깅을 한번 해봅시다~")
-    print("user_id:", user_id)
-    print("merchant:", merchant)
-    print("mcc_code:", mcc_code)
-    print("amount:", amount)
+    # 현재 시각을 결제 시각으로 사용 (한국시간 UTC+9)
+    kst = timezone(timedelta(hours=9))
+    current_time = datetime.now(kst)
+    payment_time = current_time.strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
+    weekday = ["월", "화", "수", "목", "금", "토", "일"][current_time.weekday()]
 
-    question = merchant+ "에서 " + str(amount) + "원 사용 예정. 내 카드 중 가장 유리한 카드 추천해줘. 한번에 하나 카드만 사용 가능하니까 모든 혜택 정보를 합산하지 말고 가장 좋은 카드 하나만 추천해줘."
+
+
+    question = f"{payment_time}, {weekday}요일 {merchant}에서 {amount}원 사용 예정. \n 내 사용 내역과 혜택 적용 가능한 시간, 요일인지, 한도를 고려해서 가장 결제 금액이 저렴한 카드 계산해줘. \n 한번에 하나 카드만 사용 가능하니까 모든 혜택 정보를 합산하지 말고 가장 좋은 카드 하나만 추천해줘. \n"
 
     # DB 연결해서 데이터 가져오기 및 context 정리
     try:
@@ -118,14 +161,11 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
         # 혜택 리스트 조회 (benefit_sum과 조인된 데이터)
         benefits_df = get_benefits_by_user_assets_and_mcc(user_id, mcc_code)
         
+        print(f"🔍 조회된 혜택 데이터:\n{benefits_df}")
         # 마크다운 형식으로 변환
         benefits_markdown = format_benefits_to_markdown(benefits_df)
-        
-        # 현재 시각을 결제 시각으로 사용 (한국시간 UTC+9)
-        kst = timezone(timedelta(hours=9))
-        current_time = datetime.now(kst)
-        payment_time = current_time.strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
-        weekday = ["월", "화", "수", "목", "금", "토", "일"][current_time.weekday()]
+        print(f"혜택 마크다운:\n{benefits_markdown}")
+
         
         # context 구성 (마크다운 형식)
         context = f"""
@@ -140,10 +180,9 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
 {benefits_markdown}
 
 # 📈 분석 요청
-위 정보를 바탕으로 가장 혜택이 높은 카드를 추천해주세요.
-각 카드의 혜택율, 한도, 현재 사용량을 고려하여 실제 절약 금액을 계산해주세요.
-현재 시간까지 고려해서 혜택 적용 가능한지 한번 더 체크하세요.
-예를 들어서 신한 Mr.Life 카드를 16시에 결제 요청한다면 사용 불가능합니다.
+Benefit별 json_rawdata 정보를 복합적으로 이해하여 혜택이 적용된 최종 결제 금액을 계산하고, 가장 혜택이 높은 카드를 추천해주세요.
+오후 9시 ~ 오전 9시까지 Night 할인서비스 10% 할인이라고 써있는 경우 Night에만 적용 가능한 혜택입니다. 그 아래에 일반 혜택은 없는 것입니다.
+혜택을 복합적으로 잘 이해하여 계산하세요.
         """
         
         print(f"📊 완전한 마크다운 context:")
@@ -165,7 +204,7 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
     
     # 카드 혜택 비교하고 카드 추천하기
     answer = invoke_question(llm=chat, prompt=prompt_data["get_sale"], context=context, question=question)
-
+    
     
     # answer에는 딕셔너리 모양의 str type이 반환됨.
     data_dict = json.loads(answer)
