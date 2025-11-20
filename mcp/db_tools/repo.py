@@ -116,10 +116,8 @@ def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
     # Use the exact SQL query form that works in MySQL Workbench
     # JSON_CONTAINS needs the second parameter as a JSON string literal like '"1111"'
     mcc_json_str = f'"{str(mcc)}"'  # converts 1111 to '"1111"'
-    print(mcc_json_str)
     sql = """
-        SELECT cb.benefit_id, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code,
-               cm.card_name, cm.json_notice, 
+        SELECT cm.card_name, cb.benefit_id, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code, cm.json_notice,
                COALESCE(bs.day_amount, 0) as day_amount, 
                COALESCE(bs.day_count, 0) as day_count, 
                COALESCE(bs.week_amount, 0) as week_amount, 
@@ -127,7 +125,8 @@ def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
                COALESCE(bs.month_amount, 0) as month_amount, 
                COALESCE(bs.month_count, 0) as month_count, 
                COALESCE(bs.year_amount, 0) as year_amount, 
-               COALESCE(bs.year_count, 0) as year_count
+               COALESCE(bs.year_count, 0) as year_count,
+               COALESCE(ct.prev_month_total, 0) as prev_month_total
         FROM card_benefit cb
         JOIN (
             SELECT DISTINCT external_account_id AS card_id
@@ -136,13 +135,16 @@ def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
         ) ua ON cb.card_id = ua.card_id
         JOIN card_master cm ON cb.card_id = cm.card_id
         LEFT JOIN benefit_sum bs ON bs.user_id = %s AND bs.benefit_id = cb.benefit_id
+        LEFT JOIN (
+            SELECT card_id, SUM(amount_krw) as prev_month_total
+            FROM card_transactions
+            WHERE user_id = %s
+            GROUP BY card_id
+        ) ct ON ct.card_id = cb.card_id
         WHERE JSON_CONTAINS(cb.mcc_code, %s, '$')
         ORDER BY cb.benefit_id
     """
-    print("얜호출되나?")
-    benefit_df = df(sql, (user_id, user_id, mcc_json_str))
-    print("이거 디버깅")
-    print(benefit_df)
+    benefit_df = df(sql, (user_id, user_id, user_id, mcc_json_str))
     benefit_df.to_csv("debug_benefit_df.csv")
     return benefit_df
 
@@ -150,7 +152,6 @@ def get_user_benefit_limit_in_benefit_sum(user_id: int) -> pd.DataFrame:
     """
     해당 user가 이번 기간에 적용받은 모든 혜택의 금액과 횟수를 조회해서 반환합니다.
     """
-    print("얘도호출하나?")
     sql = """
     SELECT * FROM benefit_sum
     WHERE user_id = %s"""

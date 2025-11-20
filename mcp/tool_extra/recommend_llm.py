@@ -3,31 +3,21 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 
 def invoke_question(llm : ChatOpenAI, prompt, context, question):
-    # 전달받은 context 사용 (하드코딩 제거)
+    # 훨씬 간단하고 명확한 구조로 변경
     try:
-        
-        question_answering_promt = ChatPromptTemplate.from_messages(
+        # prompt에 context 변수가 이미 있으므로 그냥 직접 전달
+        question_answering_prompt = ChatPromptTemplate.from_messages(
             [
-                (
-                    "system",
-                    prompt
-                ),
-                MessagesPlaceholder(variable_name="messages"),
+                ("system", prompt),
+                ("human", question)
             ]
         )
-        chain = question_answering_promt | llm | StrOutputParser()
-    
-        messages = [
-            ("human", question),
-        ]
-
-    
-        answer = chain.invoke(
-            {
-                "messages": messages,
-                "context": context,  # 실제 전달받은 context 사용
-            }
-        )
+        
+        chain = question_answering_prompt | llm | StrOutputParser()
+        
+        # context만 전달하면 됨 (prompt 안에서 {context}로 사용)
+        answer = chain.invoke({"context": context})
+        
         return answer
     except Exception as e:
         print(f"오류가 발생했습니다: {e}")
@@ -52,7 +42,7 @@ card name : 신한카드 Mr.Life
 전월 실적 달성 금액 : 38만 2000원
 일간 혜택 사용 횟수 : 0회
 주간 혜택 사용 횟수 : 3회
-월간 혜택 사용 횟수 : 6회
+월간 혜택 사용 횟수 : 3회
 년간 혜택 사용 횟수 : 7회
 
 -카드 혜택 및 제한 내용 :
