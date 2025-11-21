@@ -139,6 +139,8 @@ def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
             SELECT card_id, SUM(amount_krw) as prev_month_total
             FROM card_transactions
             WHERE user_id = %s
+              AND transaction_date >= DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%%Y-%%m-01')
+              AND transaction_date < DATE_FORMAT(CURDATE(), '%%Y-%%m-01')
             GROUP BY card_id
         ) ct ON ct.card_id = cb.card_id
         WHERE JSON_CONTAINS(cb.mcc_code, %s, '$')
@@ -156,5 +158,21 @@ def get_user_benefit_limit_in_benefit_sum(user_id: int) -> pd.DataFrame:
     SELECT * FROM benefit_sum
     WHERE user_id = %s"""
 
+    benefit_df = df(sql, (user_id,))
+    return benefit_df
+
+def get_transaction_sum_by_user(user_id: int) -> pd.DataFrame:
+    """
+    해당 유저의 전월실적을 반환합니다.
+    현재 API 요청 시각 기준으로 전월의 거래만 조회합니다.
+    """
+    sql = """
+    SELECT user_id, card_id, SUM(amount_krw) as prev_month_total
+    FROM card_transactions
+    WHERE user_id = %s 
+      AND transaction_date >= DATE_FORMAT(CURDATE() - INTERVAL 1 MONTH, '%%Y-%%m-01')
+      AND transaction_date < DATE_FORMAT(CURDATE(), '%%Y-%%m-01')
+    GROUP BY user_id, card_id;"""
+    
     benefit_df = df(sql, (user_id,))
     return benefit_df
