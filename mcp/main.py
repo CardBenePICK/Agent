@@ -264,6 +264,14 @@ def get_mcc_code(merchant_name: str):
 
     return {"merchant_name": merchant_name, "mcc_code": int(mcc_code)}
 
+@app.get("/get_location", operation_id="get_location")
+def get_location():
+    """
+    현재 사용자의 위치 정보를 반환합니다.
+    """
+    print("🔍 get_location() 호출됨")
+    return {"location": "Busan, South Korea"}
+
 # @app.get("/get_benefits_by_mcc", operation_id="get_benefits_by_mcc")
 # def get_benefits_by_mcc(user_id : int, mcc : int):
 #     """
