@@ -1,115 +1,68 @@
 import os
-from langchain_community.document_loaders import TextLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+import json
+from typing import List
+from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_elasticsearch import ElasticsearchStore
 from dotenv import load_dotenv
 
-# 환경 변수 로드
 load_dotenv()
 
+# 환경 변수 설정
 ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+INDEX_NAME = "card_benefit_index_v1"  # 인덱스 이름 변경 권장
 
-def load_documents(file_path: str):
-    """텍스트 파일을 로드하는 함수"""
+def load_processed_docs(json_path: str) -> List[Document]:
+    """전처리된 JSON 파일을 읽어 LangChain Document 객체로 변환"""
     try:
-        loader = TextLoader(file_path, encoding='utf-8')
-        documents = loader.load()
-        print(f"✅ Successfully loaded {len(documents)} documents from {file_path}")
+        with open(json_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            
+        documents = []
+        for item in data:
+            # page_content와 metadata가 확실히 분리되어 있어야 함
+            doc = Document(
+                page_content=item["page_content"],
+                metadata=item["metadata"]
+            )
+            documents.append(doc)
+            
+        print(f"✅ JSON에서 {len(documents)}개의 문서를 로드했습니다.")
         return documents
     except Exception as e:
-        print(f"❌ Error loading documents: {e}")
+        print(f"❌ 데이터 로드 실패: {e}")
         raise
 
-def split_documents(documents):
-    """문서를 청크로 분할하는 함수"""
+def ingest_documents(docs: List[Document]):
+    """Elasticsearch에 문서와 메타데이터 적재"""
     try:
-        text_splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500, 
-            chunk_overlap=50
-        )
-        docs = text_splitter.split_documents(documents)
-        print(f"✅ Successfully split documents into {len(docs)} chunks")
-        return docs
-    except Exception as e:
-        print(f"❌ Error splitting documents: {e}")
-        raise
-
-def ingest_documents(docs, index_name: str):
-    """문서를 Elasticsearch에 인덱싱하는 함수"""
-    try:
-        # API 키 확인
-        if not OPENAI_API_KEY:
-            raise ValueError("OPENAI_API_KEY not found in environment variables")
+        embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
         
-        print("🔑 Creating OpenAI embeddings...")
-        # OpenAI 임베딩 생성 - 환경 변수에서 자동으로 API 키를 읽음
-        embeddings = OpenAIEmbeddings(
-            model="text-embedding-3-small"  # 최신 임베딩 모델 사용
-        )
+        print(f"🚀 Elasticsearch({ELASTICSEARCH_URL})에 적재 시작...")
         
-        print("📊 Testing embeddings...")
-        # 임베딩 테스트
-        test_embed = embeddings.embed_query("test")
-        print(f"✅ Embeddings working! Dimension: {len(test_embed)}")
-
-        print("🔍 Connecting to Elasticsearch...")
-        db = ElasticsearchStore.from_documents(
-            docs,
-            embeddings,
+        # from_documents를 사용하면 metadata도 자동으로 ES에 매핑되어 저장됩니다.
+        vector_store = ElasticsearchStore.from_documents(
+            documents=docs,
+            embedding=embeddings,
             es_url=ELASTICSEARCH_URL,
-            index_name=index_name
+            index_name=INDEX_NAME,
+            # 이미 청킹이 되어 있으므로 여기서 또 자르지 않습니다.
         )
         
-        print(f"✅ Documents indexed to Elasticsearch index '{index_name}' successfully.")
-        return db
+        print(f"🎉 적재 완료! 총 {len(docs)}개 문서가 '{INDEX_NAME}' 인덱스에 저장되었습니다.")
+        return vector_store
         
     except Exception as e:
-        print(f"❌ Error ingesting documents: {e}")
+        print(f"❌ 적재 중 오류 발생: {e}")
         raise
-
-def main():
-    """메인 함수"""
-    try:
-        # 샘플 텍스트 생성
-        sample_text = """
-LangChain is an open-source framework designed to help developers build applications with Large Language Models (LLMs).
-It provides a standard interface for chains, lots of integrations with other tools, and end-to-end chains for common applications.
-
-LangGraph is a library for building stateful, multi-actor applications with LLMs, modeling steps as nodes and edges in a graph.
-It extends the LangChain Expression Language with the ability to coordinate multiple chains across multiple steps of computation.
-
-FastAPI is a modern, high-performance web framework for building APIs with Python.
-It is based on standard Python type hints and provides automatic API documentation.
-
-Elasticsearch is a distributed search and analytics engine, which can also serve as a powerful vector store for RAG.
-It provides scalable full-text search and supports vector similarity search for semantic retrieval.
-
-LangSmith is a platform for debugging, testing, and monitoring AI applications.
-It helps developers trace, evaluate, and monitor their LangChain applications in production.
-"""
-
-        print("📝 Creating sample document...")
-        with open("example_docs.txt", "w", encoding='utf-8') as f:
-            f.write(sample_text)
-
-        print("📚 Loading documents...")
-        documents = load_documents("example_docs.txt")
-        
-        print("✂️  Splitting documents...")
-        chunks = split_documents(documents)
-        
-        print("🚀 Ingesting documents to Elasticsearch...")
-        ingest_documents(chunks, "llm_rag_index")
-        
-        print("🎉 All done! Documents have been successfully indexed.")
-        
-        print(ELASTICSEARCH_URL)
-    except Exception as e:
-        print(f"💥 Error in main process: {e}")
-        import traceback
-        traceback.print_exc()
 
 if __name__ == "__main__":
-    main()
+    # 전처리 단계에서 만든 파일 경로를 지정하세요.
+    JSON_FILE_PATH = "processed_card_chunks.json" 
+    
+    if os.path.exists(JSON_FILE_PATH):
+        docs = load_processed_docs(JSON_FILE_PATH)
+        ingest_documents(docs)
+    else:
+        print(f"⚠️ '{JSON_FILE_PATH}' 파일이 없습니다. 전처리 코드를 먼저 실행해서 파일을 만들어주세요.")
