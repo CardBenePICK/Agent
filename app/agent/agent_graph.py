@@ -40,7 +40,7 @@ async def create_agent_app():
 
     # 1) tools 설정
     tools = []
-
+    raw_return_tools = ["get_sale_value"] 
     # 2) MCP 서버 도구를 로드하여 합치기 (이름 중복 제거)
     if client:
         try:
@@ -48,6 +48,9 @@ async def create_agent_app():
             loaded = loaded or []
             existing = {getattr(t, "name", None) for t in tools}
             for t in loaded:
+                if t.name in raw_return_tools:
+                    t.return_direct = True  # 이 도구만 AI 요약 없이 바로 종료!
+                    print(f"✅ [설정 완료] '{t.name}' 도구는 JSON을 그대로 반환합니다.")
                 if getattr(t, "name", None) not in existing:
                     tools.append(t)
             if tools:
