@@ -1,4 +1,5 @@
 import os
+import json
 from typing import List, Optional
 
 
@@ -9,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage, ToolMessage
 from langchain.memory import ConversationBufferWindowMemory
 
 
@@ -94,6 +95,15 @@ def get_history() -> List[BaseMessage]:
 
 
 def pick_last_ai_text(messages: List[BaseMessage]) -> Optional[str]:
+    last_message = messages[-1]
+    final_response = ""
+
+    # 1. 만약 마지막 메시지가 '도구의 결과(ToolMessage)'라면 (return_direct=True 설정 시)
+    if isinstance(last_message, ToolMessage):
+        # 도구의 결과(JSON 문자열)를 그대로 사용
+        final_response = last_message.content
+        return final_response
+    
     for m in reversed(messages or []):
         if isinstance(m, AIMessage) or getattr(m, "type", "") == "ai":
             return getattr(m, "content", "")
@@ -143,7 +153,6 @@ async def chat(request: Request, query: str = Form(...)):
         result = await agent_app.ainvoke({"messages": messages})
         state_messages: List[BaseMessage] = result.get("messages", [])
         ai_text = pick_last_ai_text(state_messages) or ""
-
 
         # 메모리에 저장
         chat_memory.chat_memory.add_user_message(query)
