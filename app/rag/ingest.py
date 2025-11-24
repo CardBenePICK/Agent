@@ -11,7 +11,7 @@ load_dotenv()
 # 환경 변수 설정
 ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-INDEX_NAME = "card_benefit_index_v1"  # 인덱스 이름 변경 권장
+INDEX_NAME = "card_benefit2080_index_v1"  # 인덱스 이름 변경 권장
 
 def load_processed_docs(json_path: str) -> List[Document]:
     """전처리된 JSON 파일을 읽어 LangChain Document 객체로 변환"""
@@ -35,22 +35,32 @@ def load_processed_docs(json_path: str) -> List[Document]:
         raise
 
 def ingest_documents(docs: List[Document]):
-    """Elasticsearch에 문서와 메타데이터 적재"""
+    """Elasticsearch에 문서와 메타데이터 적재 (배치 처리 적용)"""
     try:
         embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
         
         print(f"🚀 Elasticsearch({ELASTICSEARCH_URL})에 적재 시작...")
         
-        # from_documents를 사용하면 metadata도 자동으로 ES에 매핑되어 저장됩니다.
-        vector_store = ElasticsearchStore.from_documents(
-            documents=docs,
-            embedding=embeddings,
+        # 1. Vector Store 인스턴스 초기화 (데이터 없이 연결만 설정)
+        vector_store = ElasticsearchStore(
             es_url=ELASTICSEARCH_URL,
             index_name=INDEX_NAME,
-            # 이미 청킹이 되어 있으므로 여기서 또 자르지 않습니다.
+            embedding=embeddings
         )
         
-        print(f"🎉 적재 완료! 총 {len(docs)}개 문서가 '{INDEX_NAME}' 인덱스에 저장되었습니다.")
+        # 2. 배치 처리 설정 (한 번에 1000개씩)
+        batch_size = 200
+        total_docs = len(docs)
+        
+        # 3. 반복문으로 나누어 적재
+        for i in range(0, total_docs, batch_size):
+            batch = docs[i : i + batch_size]
+            print(f"📦 배치 적재 중... ({i + 1}/{total_docs}) - {len(batch)}개 문서")
+            
+            # add_documents 함수를 사용하여 데이터 추가
+            vector_store.add_documents(batch)
+            
+        print(f"🎉 모든 적재 완료! 총 {total_docs}개 문서가 '{INDEX_NAME}' 인덱스에 저장되었습니다.")
         return vector_store
         
     except Exception as e:
@@ -58,9 +68,14 @@ def ingest_documents(docs: List[Document]):
         raise
 
 if __name__ == "__main__":
-    # 전처리 단계에서 만든 파일 경로를 지정하세요.
-    JSON_FILE_PATH = "processed_card_chunks.json" 
+    # 1. 현재 이 파이썬 파일(ingest.py)이 있는 폴더 경로를 구함
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     
+    # 2. 그 폴더 안에 있는 processed_card_chunks.json 파일을 지정
+    JSON_FILE_PATH = os.path.join(current_dir, "processed_card_chunks.json")
+    
+    print(f"📂 파일 찾는 경로: {JSON_FILE_PATH}")  # 경로 확인용 출력
+
     if os.path.exists(JSON_FILE_PATH):
         docs = load_processed_docs(JSON_FILE_PATH)
         ingest_documents(docs)
