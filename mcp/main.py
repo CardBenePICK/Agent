@@ -1,19 +1,24 @@
 import os
-from fastapi import FastAPI, HTTPException, Response, status
+from fastapi import FastAPI, HTTPException, Request, Response, status
 from fastapi_mcp import FastApiMCP
 from typing import Dict, Any
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.rate_limiters import InMemoryRateLimiter
 import json
+import jwt
 import pandas as pd
 from tool_extra.recommend_llm import invoke_question
 import time
 from datetime import datetime, timezone, timedelta
 from db_tools.repo import get_mcc_code_by_merchant, get_benefits_by_user_assets_and_mcc,get_user_benefit_limit_in_benefit_sum
 
+# JWT 설정 (검증용 비밀키가 없으면 서명 검증을 건너뜁니다)
 load_dotenv()
-app = FastAPI(title="Weather & Stock MCP Server")
+
+JWT_SECRET = os.getenv("SECRET_KEY")
+JWT_ALGORITHM = "HS256"
+app = FastAPI(title="Card Benefit Recommendation MCP Server")
 
 # OpenWeather API 설정
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
@@ -220,14 +225,44 @@ Benefit별 json_rawdata 정보를 복합적으로 이해하여 혜택이 적용�
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"오류 발생: {str(e)}")
 
-@app.get("/get_user_id", operation_id ="get_user_id")
-def get_user_id() -> int:
-    """
-        사용자의 user_id를 알아냅니다.
-    """
+def _extract_token(auth_header: str | None) -> str:
+    if not auth_header:
+        raise HTTPException(status_code=401, detail="Authorization header is missing")
 
-    # 나중에 DB에서 사용자 이름으로 user_id를 조회하는 로직으로 변경 필요
-    return 1
+    scheme, _, token = auth_header.partition(" ")
+    if scheme.lower() != "bearer" or not token:
+        raise HTTPException(status_code=401, detail="Authorization header must be a Bearer token")
+    return token
+
+
+def _decode_user_id_from_token(token: str) -> int:
+    try:
+        if JWT_SECRET:
+            payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        else:
+            payload = jwt.decode(token, options={"verify_signature": False})
+    except jwt.ExpiredSignatureError as exc:
+        raise HTTPException(status_code=401, detail="JWT token has expired") from exc
+    except jwt.InvalidTokenError as exc:
+        raise HTTPException(status_code=401, detail=f"Invalid JWT token: {exc}") from exc
+
+    user_id = payload.get("user_id")
+    if user_id is None:
+        raise HTTPException(status_code=400, detail="user_id is missing in JWT payload")
+
+    try:
+        return int(user_id)
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=400, detail="user_id in JWT payload must be an integer") from exc
+
+
+@app.get("/get_user_id", operation_id ="get_user_id")
+def get_user_id(request: Request) -> Dict[str, int]:
+    """JWT 토큰을 디코딩해 사용자 ID를 반환합니다."""
+    print("🔍 get_user_id() 호출됨")
+    token = _extract_token(request.headers.get("Authorization"))
+    user_id = _decode_user_id_from_token(token)
+    return {"user_id": user_id}
 
 @app.get("/health", status_code=status.HTTP_200_OK)
 def health_check():

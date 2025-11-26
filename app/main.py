@@ -185,8 +185,16 @@ async def chat(request: Request, query: str = Form(...)):
 async def chat(request: Request, query: str = Form(...)):
     start_time = time.perf_counter()
     global agent_app
-    if agent_app is None:
-        agent_app = await create_agent_app()
+
+    auth_header = request.headers.get("Authorization")
+
+    if auth_header:
+        # JWT 기반 요청의 경우 Authorization 헤더를 MCP 클라이언트로 전달하기 위해 별도의 에이전트를 생성합니다.
+        current_agent_app = await create_agent_app(authorization=auth_header)
+    else:
+        if agent_app is None:
+            agent_app = await create_agent_app()
+        current_agent_app = agent_app
 
     # messages: System + history + 현재 사용자 질문
     history = get_history()
@@ -200,7 +208,7 @@ async def chat(request: Request, query: str = Form(...)):
     try:
         # create_react_agent는 {"messages": [...]} 입력을 받습니다.
         print(f"agent_app invoke time {datetime.now()}" )
-        result = await agent_app.ainvoke({"messages": messages})
+        result = await current_agent_app.ainvoke({"messages": messages})
         state_messages: List[BaseMessage] = result.get("messages", [])
         ai_text = pick_last_ai_text(state_messages) or ""
 
