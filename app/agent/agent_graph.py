@@ -1,6 +1,4 @@
 import os
-from typing import Optional
-
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
@@ -19,47 +17,24 @@ else:
     os.environ["LANGCHAIN_TRACING_V2"] = "false"
     print("⚠️  LangSmith API 키가 없습니다. 추적이 비활성화됩니다.")
 
-def _build_mcp_client(authorization: Optional[str] = None) -> Optional[MultiServerMCPClient]:
-    """Create an MCP client with optional per-request Authorization header."""
-
-    server_config = {
+# MCP 클라이언트 초기화
+try:
+    client = MultiServerMCPClient({
         "fisa-mcp": {
             # "url": "http://host.docker.internal:8001/mcp", # docker 안에서 돌고 있기 때문에 밖에 있는 8001 번의 mcp를 찾기 위해서
-            "url": "http://mcp_server_final:8001/mcp",  # docker 안에서 돌고 있기 때문에 다른 container의 8001 번의 mcp를 찾기 위해서
-            # fastapi_llm_agent_final:
-            "transport": "streamable_http",
+            "url": "http://mcp_server_final:8001/mcp", # docker 안에서 돌고 있기 때문에 다른 container의 8001 번의 mcp를 찾기 위해서
+            # fastapi_llm_agent_final: 
+            "transport": "streamable_http"
         }
-    }
-
-    if authorization:
-        server_config["fisa-mcp"]["headers"] = {"Authorization": authorization}
-
-    try:
-        client = MultiServerMCPClient(server_config)
-        header_info = "with Authorization" if authorization else "without Authorization"
-        print(f"✅ MCP 클라이언트가 초기화되었습니다. ({header_info})")
-        return client
-    except TypeError as exc:
-        if authorization and "headers" in server_config.get("fisa-mcp", {}):
-            # MultiServerMCPClient가 headers 인자를 지원하지 않는 경우 기본 설정으로 재시도
-            print(f"⚠️ MCP 클라이언트가 Authorization 헤더를 지원하지 않아 기본 구성으로 재시도합니다: {exc}")
-            server_config["fisa-mcp"].pop("headers", None)
-            try:
-                client = MultiServerMCPClient(server_config)
-                print("✅ MCP 클라이언트가 기본 구성으로 초기화되었습니다.")
-                return client
-            except Exception as retry_exc:
-                print(f"⚠️ MCP 클라이언트 기본 구성 초기화 실패: {retry_exc}")
-                return None
-        print(f"⚠️ MCP 클라이언트 초기화 실패: {exc}")
-        return None
-    except Exception as exc:
-        print(f"⚠️ MCP 클라이언트 초기화 실패: {exc}")
-        return None
+    })
+    print("✅ MCP 클라이언트가 초기화되었습니다.")
+except Exception as e:
+    print(f"⚠️ MCP 클라이언트 초기화 실패: {e}")
+    client = None
 
 
     
-async def create_agent_app(authorization: Optional[str] = None):
+async def create_agent_app():
     """LangGraph create_react_agent + retriever_tool + MCP 도구 구성 (messages 기반 호출과 호환)"""
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
@@ -67,7 +42,6 @@ async def create_agent_app(authorization: Optional[str] = None):
     tools = []
     raw_return_tools = ["get_sale_value"] 
     # 2) MCP 서버 도구를 로드하여 합치기 (이름 중복 제거)
-    client = _build_mcp_client(authorization)
     if client:
         try:
             loaded = await client.get_tools()
