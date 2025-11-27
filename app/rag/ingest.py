@@ -3,7 +3,7 @@ import json
 import time  # ✅ 필수 추가!
 from typing import List
 from langchain_core.documents import Document
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_elasticsearch import ElasticsearchStore
 from dotenv import load_dotenv
 
