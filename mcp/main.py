@@ -136,7 +136,6 @@ def get_sale(user_id :int, merchant: str, mcc_code : int, amount: int = None) ->
     가맹점 이름과 결제금액, 사용자 보유 카드 혜택을 이용하여 가장 결제 금액이 저렴한 카드와 결제 정보를 반환합니다.
 
     이 함수를 실행하기 전 필수 정보 수집 과정:
-    1. user_id을 모르면 get_user_id() 도구를 먼저 사용하세요
     2. merchant의 MCC 코드가 필요하면 get_mcc_code() 도구를 사용하세요
     3. 모든 정보가 수집되면 이 함수를 호출하여 최종 카드를 추천받으세요
     """
@@ -220,14 +219,14 @@ Benefit별 json_rawdata 정보를 복합적으로 이해하여 혜택이 적용�
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"오류 발생: {str(e)}")
 
-@app.get("/get_user_id", operation_id ="get_user_id")
-def get_user_id() -> int:
-    """
-        사용자의 user_id를 알아냅니다.
-    """
+# @app.get("/get_user_id", operation_id ="get_user_id")
+# def get_user_id() -> int:
+#     """
+#         사용자의 user_id를 알아냅니다.
+#     """
 
-    # 나중에 DB에서 사용자 이름으로 user_id를 조회하는 로직으로 변경 필요
-    return 1
+#     # 나중에 DB에서 사용자 이름으로 user_id를 조회하는 로직으로 변경 필요
+#     return 1
 
 @app.get("/health", status_code=status.HTTP_200_OK)
 def health_check():
