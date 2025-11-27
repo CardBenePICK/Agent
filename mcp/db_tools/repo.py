@@ -117,7 +117,7 @@ def get_benefits_by_user_assets_and_mcc(user_id: int, mcc: int) -> pd.DataFrame:
     # JSON_CONTAINS needs the second parameter as a JSON string literal like '"1111"'
     mcc_json_str = f'"{str(mcc)}"'  # converts 1111 to '"1111"'
     sql = """
-        SELECT cm.card_name, cb.benefit_id, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code, cm.json_notice,
+        SELECT cm.card_name, cb.benefit_id, cb.card_id, cb.category, cb.summary, cb.json_rawdata, cb.mcc_code, cm.summarized_notice,
                COALESCE(bs.day_amount, 0) as day_amount, 
                COALESCE(bs.day_count, 0) as day_count, 
                COALESCE(bs.week_amount, 0) as week_amount, 
