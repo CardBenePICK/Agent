@@ -20,6 +20,13 @@ OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
 OPENWEATHER_BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 HF_API_KEY = os.getenv("HF_API_KEY")
 LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
+if LANGSMITH_API_KEY and LANGSMITH_API_KEY.strip():
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_API_KEY"] = LANGSMITH_API_KEY
+    os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGCHAIN_PROJECT", "LLM Agent with LangGraph")
+else:
+    os.environ["LANGCHAIN_TRACING_V2"] = "false"
+
 LLM_MODEL = "openai/gpt-oss-120b" # gpt-4o-mini, openai/gpt-oss-120b
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -92,7 +99,7 @@ def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
                 value = row[col_name]
                 
                 # json_rawdata와 json_notice 컬럼은 특별히 처리
-                if col_name in ['json_rawdata', 'json_notice'] and value:
+                if col_name in ['json_rawdata', 'summarized_notice'] and value:
                     result += f"{col_name}:\n"
                     try:
                         # JSON 문자열을 파싱
