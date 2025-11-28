@@ -66,6 +66,50 @@ def merge_context(items):
                 parts.append(str(value))
     return '\n'.join(parts)
 
+def recursive_to_text(data, indent_level=0):
+    """
+    재귀적으로 JSON 데이터를 순회하며 자연어 텍스트로 변환하는 함수
+    """
+    text_result = ""
+    indent = "  " * indent_level  # 들여쓰기
+
+    if isinstance(data, dict):
+        for key, value in data.items():
+            # 'table' 키가 있는 경우 표 데이터를 텍스트로 변환
+            if key == "table" and isinstance(value, list):
+                text_result += f"{indent}[표 데이터]\n"
+                for row in value:
+                    # 각 행의 데이터를 ' | '로 구분하여 출력
+                    text_result += f"{indent}  - {' | '.join(map(str, row))}\n"
+            
+            # 'subtitle' 같은 제목 키는 강조해서 출력
+            elif key in ["subtitle", "title"]:
+                text_result += f"\n{indent}■ {value}\n"
+            
+            # 그 외 일반적인 키-값 쌍
+            else:
+                # descriptions 등은 키를 출력하지 않고 값만 재귀 처리할 수도 있음
+                if key not in ["descriptions", "items"]: 
+                     text_result += f"{indent}- {key}: "
+                
+                # 값 처리 (재귀 호출 전에 줄바꿈 처리 등)
+                sub_text = recursive_to_text(value, indent_level + 1)
+                text_result += sub_text
+
+    elif isinstance(data, list):
+        for item in data:
+            # 리스트 내부 아이템이 문자열이면 바로 출력, 아니면 재귀
+            if isinstance(item, str):
+                text_result += f"{indent}- {item}\n"
+            else:
+                text_result += recursive_to_text(item, indent_level)
+    
+    elif data is not None:
+        # 문자열, 숫자 등 기본 타입
+        text_result += f"{str(data)}\n"
+
+    return text_result
+
 def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
     """
     혜택 DataFrame의 모든 정보를 그대로 유지하며 benefit별로만 구분선을 추가
@@ -105,16 +149,10 @@ def format_benefits_to_markdown(benefits_df: pd.DataFrame) -> str:
                         # JSON 문자열을 파싱
                         json_data = json.loads(value) if isinstance(value, str) else value
                         
-                        # merge_context 방식으로 처리
-                        if isinstance(json_data, list):
-                            merged_text = merge_context(json_data)
-                            result += f"  {merged_text}\n"
-                        # 딕셔너리인 경우 그대로 출력
-                        elif isinstance(json_data, dict):
-                            result += f"  {json.dumps(json_data, ensure_ascii=False, indent=4)}\n"
-                        # 그 외의 경우 원본 그대로
-                        else:
-                            result += f"  {json_data}\n"
+                        # 2. 재귀 함수를 통해 모든 구조를 텍스트로 변환
+                        merged_text = recursive_to_text(json_data)
+                        
+                        result += f"{merged_text}\n"
                     except (json.JSONDecodeError, TypeError):
                         # JSON 파싱 실패시 원본 그대로 출력
                         result += f"  {value}\n"
