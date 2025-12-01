@@ -28,8 +28,8 @@ HF_API_KEY = os.getenv("HF_API_KEY") or os.getenv("HF_TOKEN")
 INDEX_NAME = "card_benefit_bgem3_v2"
 
 MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct:novita" 
-EMBEDDING_MODEL_ID = "intfloat/multilingual-e5-large" # API 안정성 위해 e5 사용
-
+# EMBEDDING_MODEL_ID = "intfloat/multilingual-e5-large" # API 안정성 위해 e5 사용
+EMBEDDING_MODEL_ID = "BAAI/bge-m3"
 # ============================================================
 # 0. 카테고리 사전 로드
 # ============================================================
