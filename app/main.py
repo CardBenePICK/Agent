@@ -1,21 +1,22 @@
 import os
-from typing import List, Optional
+import json
+from typing import Any, Dict, List, Optional, Union
 
 
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 
 
-from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage
-from langchain.memory import ConversationBufferWindowMemory
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage, ToolMessage
 
 
 from agent.agent_graph import create_agent_app
 import time
 from datetime import datetime
+import jwt
 
 
 load_dotenv()
@@ -52,14 +53,15 @@ app.add_middleware(
 
 templates = Jinja2Templates(directory="templates")
 
+# JWT 설정
+JWT_SECRET = os.getenv("SECRET_KEY")
+JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 
-# 대화 메모리
-chat_memory = ConversationBufferWindowMemory(
-    k=10,
-    return_messages=True,
-    memory_key="chat_history",
-)
-
+# 사용자별 세션 저장소
+SessionKey = Union[int, str]
+DEFAULT_SESSION_KEY: SessionKey = "guest"
+_MAX_HISTORY_LENGTH = 20
+user_sessions: Dict[SessionKey, Dict[str, Any]] = {}
 
 # 전역 에이전트
 agent_app = None
@@ -89,11 +91,73 @@ SYSTEM_PROMPT = (
 
 
 
-def get_history() -> List[BaseMessage]:
-    return chat_memory.load_memory_variables({}).get("chat_history", [])
+def _get_session(session_key: SessionKey) -> Dict[str, Any]:
+    if session_key not in user_sessions:
+        user_sessions[session_key] = {
+            "history": [],
+            "auth": None,
+            "user_id": session_key if isinstance(session_key, int) else None
+        }
+    return user_sessions[session_key]
+
+
+def _trim_history(history: List[BaseMessage]) -> None:
+    if len(history) > _MAX_HISTORY_LENGTH:
+        del history[:len(history) - _MAX_HISTORY_LENGTH]
+
+
+def _build_system_prompt(user_id: Optional[int] = None) -> str:
+    base_prompt = SYSTEM_PROMPT
+    if user_id is not None:
+        base_prompt += f"\n\n현재 대화 중인 사용자 ID: {user_id}"
+    return base_prompt
+
+
+def _extract_token(auth_header: Optional[str]) -> str:
+    if not auth_header:
+        raise HTTPException(status_code=401, detail="Authorization header is missing")
+    
+    scheme, _, token = auth_header.partition(" ")
+    if scheme.lower() != "bearer" or not token:
+        raise HTTPException(status_code=401, detail="Authorization header must be a Bearer token")
+    return token
+
+
+def _decode_user_id(token: str) -> int:
+    try:
+        if JWT_SECRET:
+            payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        else:
+            payload = jwt.decode(token, options={"verify_signature": False})
+    except jwt.ExpiredSignatureError as exc:
+        raise HTTPException(status_code=401, detail="JWT token has expired") from exc
+    except jwt.InvalidTokenError as exc:
+        raise HTTPException(status_code=401, detail=f"Invalid JWT token: {exc}") from exc
+
+    user_id = payload.get("user_id")
+    if user_id is None:
+        raise HTTPException(status_code=400, detail="user_id is missing in JWT payload")
+
+    try:
+        return int(user_id)
+    except (TypeError, ValueError) as exc:
+        raise HTTPException(status_code=400, detail="user_id in JWT payload must be an integer") from exc
+
+
+def get_history(session_key: SessionKey = DEFAULT_SESSION_KEY) -> List[BaseMessage]:
+    return _get_session(session_key)["history"]
 
 
 def pick_last_ai_text(messages: List[BaseMessage]) -> Optional[str]:
+    last_message = messages[-1]
+    final_response = ""
+
+    # 1. 만약 마지막 메시지가 '도구의 결과(ToolMessage)'라면 (return_direct=True 설정 시)
+    if isinstance(last_message, ToolMessage):
+        # 도구의 결과(JSON 문자열)를 그대로 사용
+        final_response = last_message.content
+        return final_response
+    
     for m in reversed(messages or []):
         if isinstance(m, AIMessage) or getattr(m, "type", "") == "ai":
             return getattr(m, "content", "")
@@ -107,6 +171,7 @@ def pick_last_ai_text(messages: List[BaseMessage]) -> Optional[str]:
 async def _startup():
     global agent_app
     agent_app = await create_agent_app() # agent_graph.py에 create_agent_app() 있음. llm 및 tools 설정 가능
+    user_sessions.clear()
 
 
 # FastApi와 연결해서 루트 경로 "/"로 들어오면 templates의 index.html을 열도록 한다.
@@ -132,9 +197,12 @@ async def chat(request: Request, query: str = Form(...)):
         agent_app = await create_agent_app()
 
 
-    # messages: System + history + 현재 사용자 질문
-    history = get_history()
-    messages: List[BaseMessage] = [SystemMessage(content=SYSTEM_PROMPT)] + history + [HumanMessage(content=query)]
+    # 게스트 세션 사용
+    session = _get_session(DEFAULT_SESSION_KEY)
+    history = session["history"]
+    system_prompt = _build_system_prompt()
+    messages: List[BaseMessage] = [SystemMessage(content=system_prompt)] + history + [HumanMessage(content=query)]
+    input_len = len(messages)
 
 
     try:
@@ -144,10 +212,11 @@ async def chat(request: Request, query: str = Form(...)):
         state_messages: List[BaseMessage] = result.get("messages", [])
         ai_text = pick_last_ai_text(state_messages) or ""
 
-
-        # 메모리에 저장
-        chat_memory.chat_memory.add_user_message(query)
-        chat_memory.chat_memory.add_ai_message(ai_text)
+        # 히스토리에 새 메시지들 저장 (Human + 새로 추가된 AI/Tool 메시지들)
+        history.append(HumanMessage(content=query))
+        if len(state_messages) > input_len:
+            history.extend(state_messages[input_len:])
+        _trim_history(history)
 
 
         success = True
@@ -166,22 +235,38 @@ async def chat(request: Request, query: str = Form(...)):
         "index.html",
         {
             "request": request,
-            "chat_history": get_history(),
+            "chat_history": get_history(DEFAULT_SESSION_KEY),
             "success": success,
             "error": error,
         },
     )
 
 @app.post("/chat_react") # response_class=HTMLResponse 제거
-async def chat(request: Request, query: str = Form(...)):
+async def chat_react(request: Request, query: str = Form(...)):
     start_time = time.perf_counter()
     global agent_app
     if agent_app is None:
         agent_app = await create_agent_app()
 
-    # messages: System + history + 현재 사용자 질문
-    history = get_history()
-    messages: List[BaseMessage] = [SystemMessage(content=SYSTEM_PROMPT)] + history + [HumanMessage(content=query)]
+    # JWT 토큰에서 user_id 추출
+    auth_header = request.headers.get("Authorization")
+    try:
+        token = _extract_token(auth_header)
+        user_id = _decode_user_id(token)
+    except HTTPException as exc:
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={"success": False, "response": "", "error": exc.detail, "cards": []}
+        )
+
+    # 사용자별 세션 가져오기
+    session = _get_session(user_id)
+    session["auth"] = auth_header
+    history = session["history"]
+    
+    system_prompt = _build_system_prompt(user_id)
+    messages: List[BaseMessage] = [SystemMessage(content=system_prompt)] + history + [HumanMessage(content=query)]
+    input_len = len(messages)
 
     # 변수 초기화
     ai_text = ""
@@ -195,9 +280,11 @@ async def chat(request: Request, query: str = Form(...)):
         state_messages: List[BaseMessage] = result.get("messages", [])
         ai_text = pick_last_ai_text(state_messages) or ""
 
-        # 메모리에 저장
-        chat_memory.chat_memory.add_user_message(query)
-        chat_memory.chat_memory.add_ai_message(ai_text)
+        # 히스토리에 새 메시지들 저장 (Human + 새로 추가된 AI/Tool 메시지들)
+        history.append(HumanMessage(content=query))
+        if len(state_messages) > input_len:
+            history.extend(state_messages[input_len:])
+        _trim_history(history)
 
         success = True
         
@@ -227,18 +314,20 @@ async def chat(request: Request, query: str = Form(...)):
 
 @app.post("/clear-chat")
 async def clear_chat():
-    chat_memory.clear()
+    user_sessions[DEFAULT_SESSION_KEY] = {"history": [], "auth": None, "user_id": None}
     return JSONResponse({"ok": True})
 
 
 @app.get("/chat-history")
 async def get_chat_history():
     chat_history = []
-    for msg in chat_memory.chat_memory.messages:
+    for msg in get_history(DEFAULT_SESSION_KEY):
         if isinstance(msg, HumanMessage):
             chat_history.append({"type": "user", "content": msg.content})
         elif isinstance(msg, AIMessage):
             chat_history.append({"type": "ai", "content": msg.content})
+        elif isinstance(msg, ToolMessage):
+            chat_history.append({"type": "tool", "content": msg.content})
     return {"chat_history": chat_history}
 
 
