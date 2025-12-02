@@ -8,6 +8,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+# 👇 새로 만든 라우터 import
+from rag.routers import ml_recommendations
 
 
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, BaseMessage, ToolMessage
@@ -335,3 +337,8 @@ async def get_chat_history():
 @app.get("/api")
 async def root():
     return {"message": "LLM Agent API is running"}
+
+
+
+
+app.include_router(ml_recommendations.router, prefix="/api/ml", tags=["ML Recommendation"])
