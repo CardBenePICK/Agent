@@ -11,9 +11,10 @@ from tool_extra.recommend_llm import invoke_question
 import time
 from datetime import datetime, timezone, timedelta
 from db_tools.repo import get_mcc_code_by_merchant, get_benefits_by_user_assets_and_mcc,get_user_benefit_limit_in_benefit_sum
+import requests
 
 load_dotenv()
-app = FastAPI(title="Weather & Stock MCP Server")
+app = FastAPI(title="Card Benefit Recommendation MCP Server")
 
 # OpenWeather API 설정
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
@@ -274,11 +275,16 @@ Benefit별 json_rawdata 정보를 복합적으로 이해하여 혜택이 적용�
 #     return 1
 
 @app.get("/health", status_code=status.HTTP_200_OK)
-def health_check():
+def health_check() -> Dict[str, Any]:
     """
     GET 요청에 대해 200 OK와 함께 상태를 반환합니다.
     """
-    return {"status": "ok"}
+    kst = timezone(timedelta(hours=9))
+    current_time = datetime.now(kst)
+    return {
+        "status": "ok",
+        "timestamp": current_time.strftime("%Y년 %m월 %d일 %H시 %M분 %S초")
+    }
 
 @app.head("/health", status_code=status.HTTP_200_OK)
 def head_health_check():
@@ -290,7 +296,7 @@ def head_health_check():
 
 
 @app.get("/get_mcc_code", operation_id="get_mcc_code")
-def get_mcc_code(merchant_name: str):
+def get_mcc_code(merchant_name: str) -> Dict[str, Any]:
     """
     주어진 가맹점 이름으로 DB에서 MCC 코드를 조회합니다.
     
@@ -306,7 +312,76 @@ def get_mcc_code(merchant_name: str):
     if mcc_code is None:
         raise HTTPException(status_code=404, detail=f"MCC code not found for merchant: {merchant_name}")
 
-    return {"merchant_name": merchant_name, "mcc_code": int(mcc_code)}
+    return {
+        "merchant_name": merchant_name,
+        "mcc_code": int(mcc_code)
+    }
+
+@app.get("/weather", operation_id="get_weather")
+def get_weather(city: str) -> Dict[str, Any]:
+    """
+    OpenWeather API를 사용하여 특정 도시의 현재 날씨 정보를 반환합니다.
+    사용자의 지역 정보가 없으면 get_location 도구를 먼저 사용하여 위치를 확인하세요.
+    
+    Args:
+        city (str): 날씨 정보를 가져올 도시명
+    
+    Returns:
+        Dict[str, Any]: 날씨 정보 (온도, 습도, 날씨 상태 등)
+    """
+    if not OPENWEATHER_API_KEY:
+        raise HTTPException(status_code=500, detail="OpenWeather API 키가 설정되지 않았습니다.")
+    
+    try:
+        # OpenWeather API 호출
+        params = {
+            "q": city,
+            "appid": OPENWEATHER_API_KEY,
+            "units": "metric",  # 섭씨 온도
+            "lang": "kr"  # 한국어 설명
+        }
+        
+        response = requests.get(OPENWEATHER_BASE_URL, params=params)
+        response.raise_for_status()  # HTTP 에러 발생시 예외 발생
+        
+        weather_data = response.json()
+        
+        # 한국시간으로 변환
+        kst = timezone(timedelta(hours=9))
+        current_time = datetime.now(kst)
+        
+        # JSON 딕셔너리로 응답 생성
+        weather_info = {
+            "city": weather_data["name"],
+            "country": weather_data["sys"]["country"],
+            "temperature": weather_data["main"]["temp"],
+            "feels_like": weather_data["main"]["feels_like"],
+            "humidity": weather_data["main"]["humidity"],
+            "pressure": weather_data["main"]["pressure"],
+            "weather_main": weather_data["weather"][0]["main"],
+            "weather_description": weather_data["weather"][0]["description"],
+            "wind_speed": weather_data["wind"]["speed"],
+            "clouds": weather_data["clouds"]["all"],
+            "visibility": weather_data.get("visibility", 0) / 1000,  # km 단위로 변환
+            "sunrise": datetime.fromtimestamp(weather_data["sys"]["sunrise"], tz=kst).strftime("%H:%M"),
+            "sunset": datetime.fromtimestamp(weather_data["sys"]["sunset"], tz=kst).strftime("%H:%M"),
+            "timezone": weather_data["timezone"],
+            "current_time_kst": current_time.strftime("%Y년 %m월 %d일 %H시 %M분"),
+            "data_timestamp": datetime.fromtimestamp(weather_data["dt"], tz=kst).strftime("%Y년 %m월 %d일 %H시 %M분")
+        }
+        
+        print(f"🌤️ 날씨 정보 조회 완료 - 도시: {city}")
+        return weather_info
+        
+    except requests.exceptions.RequestException as e:
+        print(f"❌ OpenWeather API 요청 실패: {e}")
+        raise HTTPException(status_code=503, detail=f"날씨 서비스에 연결할 수 없습니다: {str(e)}")
+    except KeyError as e:
+        print(f"❌ 날씨 데이터 파싱 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"날씨 데이터를 처리하는 중 오류가 발생했습니다: {str(e)}")
+    except Exception as e:
+        print(f"❌ 예상치 못한 오류: {e}")
+        raise HTTPException(status_code=500, detail=f"날씨 정보를 가져오는 중 오류가 발생했습니다: {str(e)}")
 
 @app.get("/get_location", operation_id="get_location")
 def get_location():
@@ -349,7 +424,8 @@ def get_location():
 
 mcp = FastApiMCP(
     app,
-    name="Weather & Stock API MCP"
+    name="Card Benefit Recommendation MCP Server",
+    description="가맹점과 결제 금액에 따른 최적의 카드 추천 서비스 MCP 서버"
   
 )
 
