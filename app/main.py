@@ -40,7 +40,7 @@ from starlette.requests import Request
 
 
 
-app = FastAPI(title="LLM Agent API")
+app = FastAPI(title="LLM Agent API", root_path="/agent")
 # app.add_middleware(CProfileMiddleware)
 
 app.add_middleware(
