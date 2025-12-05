@@ -1,24 +1,26 @@
 services:
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:8.19.1
-  #   container_name: elasticsearch_final
-  #   environment:
-  #     - xpack.security.enabled=false
-  #     - discovery.type=single-node
-  #   ports:
-  #     - "9200:9200"
-  #   volumes:
-  #     - esdata:/usr/share/elasticsearch/data
+  elasticsearch:
+    # image: docker.elastic.co/elasticsearch/elasticsearch:8.19.1
+    build: ./elasticsearch  # ./elasticsearch 디렉토리에 있는 Dockerfile을 사용하여 이미지를 빌드
+    container_name: elasticsearch_final
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"  # [추천] 메모리 제한 설정 (선택사항)
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
 
-  # kibana:
-  #   image: docker.elastic.co/kibana/kibana:8.19.1
-  #   container_name: kibana_final
-  #   environment:
-  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-  #   ports:
-  #     - "5601:5601"
-  #   depends_on:
-  #     - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.19.1
+    container_name: kibana_final
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
   mcp:
     build: ./mcp
     container_name: mcp_server_final

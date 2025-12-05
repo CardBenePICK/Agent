@@ -7,3 +7,5 @@
 __pycache__
 main_back_up.py
 db.py
+processed_card_chunks.json
+ingest_nested_checkpoint_simple.json
