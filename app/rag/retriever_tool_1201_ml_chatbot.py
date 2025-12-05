@@ -52,7 +52,7 @@ safe_print("💡 종료하려면 'q' 입력 또는 Ctrl+C를 누르세요.\n")
 # 설정
 # ============================================================
 ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
-INDEX_NAME = "credit_cards_nested_v1"
+INDEX_NAME = "credit_cards_nested_top100"
 HF_API_KEY = os.getenv("HF_API_KEY")
 MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct:novita"
 
