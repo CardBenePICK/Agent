@@ -42,10 +42,7 @@ from starlette.requests import Request
 
 
 
-app = FastAPI(
-    title="LLM Agent API",
-    root_path="/agent"  # 👈 "나는 /agent 경로 뒤에 살고 있어"라고 알려줌
-)
+app = FastAPI(title="LLM Agent API", root_path="/agent")
 # app.add_middleware(CProfileMiddleware)
 
 app.add_middleware(
