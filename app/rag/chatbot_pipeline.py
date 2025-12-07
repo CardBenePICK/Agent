@@ -97,6 +97,11 @@ class QueryAnalyzer:
         """Step 1: 사용자 쿼리에서 핵심 브랜드/카테고리 추출"""
         system_prompt = (
             "Extract potential brand or category keywords from the query. "
+            "RULES: \n"
+            "1. Do NOT extract generic terms related to the product or service itself, "
+            "such as 'Card', 'Credit Card', 'Recommendation', 'Benefit', 'Discount', 'Offer', 'Point'.\n"
+            "2. Focus ONLY on specific merchant names (e.g., 'Starbucks', 'GS25') "
+            "or industry categories (e.g., 'Coffee', 'Gas', 'Convenience Store').\n"
             "Output JSON ONLY: {\"keywords\": [\"k1\", \"k2\"]}. No notes."
         )
         msg = [

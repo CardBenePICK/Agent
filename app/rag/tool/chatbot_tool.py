@@ -14,11 +14,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-@tool
+@tool(return_direct=True)
 def search_credit_cards(query: str) -> str:
     """
     이 도구는 여러 카테고리(예: 카페, 주유, 편의점 등)를 동시에 분석하고 종합 순위를 매길 수 있습니다.
     사용자가 여러 조건을 말하더라도, 쿼리를 분리하지 말고 반드시 전체 문장을 한 번에 입력해야 합니다.
+    '카페, 주유, 편의점 혜택을 가진 카드를 추천해줘'와 같은 쿼리가 들어오면 혜택을 가진 카드와 같은 맥락은
+    카드 추천을 위한 조건이라고 생각하고 카페, 주유, 편의점만을 넘겨야 합니다.
     Do NOT split the query into multiple calls. Pass the full user query into this tool ONCE.
 
     Search for credit card recommendations based on user's lifestyle or specific needs (e.g., gas, coffee, shopping).
