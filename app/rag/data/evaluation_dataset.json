@@ -1,0 +1,342 @@
+[
+  {
+    "type": "Simple",
+    "query": "공과금 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Simple",
+    "query": "편의점 할인 잘 되는 카드 추천",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2885"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2885"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Simple",
+    "query": "주유소 할인 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "52"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "52"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Simple",
+    "query": "카페/커피 할인 좋은 카드 추천",
+    "ground_truth_ids": [
+      "49",
+      "2759",
+      "666"
+    ],
+    "ground_truth": [
+      "49",
+      "2759",
+      "666"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Simple",
+    "query": "대형마트 할인 혜택 좋은 카드",
+    "ground_truth_ids": [
+      "13",
+      "2844",
+      "115"
+    ],
+    "ground_truth": [
+      "13",
+      "2844",
+      "115"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Simple",
+    "query": "배달앱 할인 되는 카드 추천",
+    "ground_truth_ids": [
+      "2885",
+      "2441",
+      "2330"
+    ],
+    "ground_truth": [
+      "2885",
+      "2441",
+      "2330"
+    ],
+    "target_name": "삼성 iD SELECT ALL 카드"
+  },
+  {
+    "type": "Simple",
+    "query": "대중교통 할인 좋은 카드 추천",
+    "ground_truth_ids": [
+      "51",
+      "2330",
+      "2559"
+    ],
+    "ground_truth": [
+      "51",
+      "2330",
+      "2559"
+    ],
+    "target_name": "삼성카드 taptap O"
+  },
+  {
+    "type": "Simple",
+    "query": "통신비 할인되는 카드 추천해줘",
+    "ground_truth_ids": [
+      "51",
+      "2885",
+      "2441"
+    ],
+    "ground_truth": [
+      "51",
+      "2885",
+      "2441"
+    ],
+    "target_name": "삼성카드 taptap O"
+  },
+  {
+    "type": "Simple",
+    "query": "온라인 쇼핑 할인 좋은 카드",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2376"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2376"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Simple",
+    "query": "넷플릭스/유튜브 같은 디지털구독 할인 카드 추천",
+    "ground_truth_ids": [
+      "2885",
+      "2441",
+      "2862"
+    ],
+    "ground_truth": [
+      "2885",
+      "2441",
+      "2862"
+    ],
+    "target_name": "삼성 iD SELECT ALL 카드"
+  },
+  {
+    "type": "Simple",
+    "query": "영화관 할인 카드 추천",
+    "ground_truth_ids": [
+      "51",
+      "2441",
+      "2376"
+    ],
+    "ground_truth": [
+      "51",
+      "2441",
+      "2376"
+    ],
+    "target_name": "삼성카드 taptap O"
+  },
+  {
+    "type": "Simple",
+    "query": "공항라운지 이용 가능한 카드 추천",
+    "ground_truth_ids": [
+      "49",
+      "2663",
+      "2685"
+    ],
+    "ground_truth": [
+      "49",
+      "2663",
+      "2685"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금이랑 편의점 둘 다 혜택 있는 카드",
+    "ground_truth_ids": [
+      "13"
+    ],
+    "ground_truth": [
+      "13"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금이랑 주유소 할인 같이 되는 카드 추천",
+    "ground_truth_ids": [
+      "13"
+    ],
+    "ground_truth": [
+      "13"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금, 편의점, 병원/약국까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "13"
+    ],
+    "ground_truth": [
+      "13"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "아파트 관리비랑 공과금 할인되는 카드",
+    "ground_truth_ids": [
+      "2330"
+    ],
+    "ground_truth": [
+      "2330"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "배달앱, 편의점, 카페 혜택 다 있는 카드 추천",
+    "ground_truth_ids": [
+      "45",
+      "2654",
+      "458"
+    ],
+    "ground_truth": [
+      "45",
+      "2654",
+      "458"
+    ],
+    "target_name": "American Express Blue"
+  },
+  {
+    "type": "Complex",
+    "query": "카페/커피랑 온라인쇼핑, 디지털구독까지 폭넓게 할인되는 카드",
+    "ground_truth_ids": [
+      "2759"
+    ],
+    "ground_truth": [
+      "2759"
+    ],
+    "target_name": "신한카드 처음(ANNIVERSE)"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통이랑 통신비 할인 둘 다 되는 카드",
+    "ground_truth_ids": [
+      "51",
+      "2330",
+      "2559"
+    ],
+    "ground_truth": [
+      "51",
+      "2330",
+      "2559"
+    ],
+    "target_name": "삼성카드 taptap O"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소랑 대형마트 혜택 같이 좋은 카드",
+    "ground_truth_ids": [
+      "13",
+      "115",
+      "227"
+    ],
+    "ground_truth": [
+      "13",
+      "115",
+      "227"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "해외여행 갈 때 공항라운지랑 해외결제 혜택 좋은 카드",
+    "ground_truth_ids": [
+      "49",
+      "2685",
+      "2553"
+    ],
+    "ground_truth": [
+      "49",
+      "2685",
+      "2553"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공 마일리지 적립하고 공항라운지도 되는 카드",
+    "ground_truth_ids": [
+      "49",
+      "2553",
+      "2237"
+    ],
+    "ground_truth": [
+      "49",
+      "2553",
+      "2237"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "온라인 쇼핑이랑 배달앱 할인 둘 다 챙기는 카드",
+    "ground_truth_ids": [
+      "2885",
+      "2482",
+      "2346"
+    ],
+    "ground_truth": [
+      "2885",
+      "2482",
+      "2346"
+    ],
+    "target_name": "삼성 iD SELECT ALL 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "디지털구독이랑 간편결제 혜택 함께 있는 카드",
+    "ground_truth_ids": [
+      "2441",
+      "2862",
+      "657"
+    ],
+    "ground_truth": [
+      "2441",
+      "2862",
+      "657"
+    ],
+    "target_name": "KB국민 My WE:SH 카드"
+  }
+]

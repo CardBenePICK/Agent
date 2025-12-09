@@ -1,0 +1,572 @@
+[
+  {
+    "type": "Complex",
+    "query": "공과금이랑 통신은 꼭인데 나머지는 생활 전반에서 두루 혜택 있는 카드",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금이랑 통신은 꼭인데 나머지는 생활 전반에서 두루 혜택 있는 신용카드",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 공과금이랑 통신은 꼭인데 나머지는 생활 전반에서 두루 혜택 있는 카드",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금이랑 통신은 꼭인데 나머지는 생활 전반에서 두루 혜택 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "카페, 편의점, 배달까지 다 쓰는데 혜택이 한쪽으로 치우치지 않는 카드 추천",
+    "ground_truth_ids": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "ground_truth": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "target_name": "원더카드 2.0 LIFE"
+  },
+  {
+    "type": "Complex",
+    "query": "카페, 편의점, 배달까지 다 쓰는데 혜택이 한쪽으로 치우치지 않는 신용카드 추천",
+    "ground_truth_ids": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "ground_truth": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "target_name": "원더카드 2.0 LIFE"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 카페, 편의점, 배달까지 다 쓰는데 혜택이 한쪽으로 치우치지 않는 카드 추천",
+    "ground_truth_ids": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "ground_truth": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "target_name": "원더카드 2.0 LIFE"
+  },
+  {
+    "type": "Complex",
+    "query": "카페, 편의점, 배달까지 다 쓰는데 혜택이 한쪽으로 치우치지 않는 카드 추천 추천해줘",
+    "ground_truth_ids": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "ground_truth": [
+      "2654",
+      "13",
+      "49"
+    ],
+    "target_name": "원더카드 2.0 LIFE"
+  },
+  {
+    "type": "Complex",
+    "query": "온라인쇼핑이랑 대형마트 둘 다 많이 쓰고 영화도 자주 봐. 폭넓게 할인되는 카드",
+    "ground_truth_ids": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "ground_truth": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "target_name": "신한카드 Discount Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "온라인쇼핑이랑 대형마트 둘 다 많이 쓰고 영화도 자주 봐. 폭넓게 할인되는 신용카드",
+    "ground_truth_ids": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "ground_truth": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "target_name": "신한카드 Discount Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 온라인쇼핑이랑 대형마트 둘 다 많이 쓰고 영화도 자주 봐. 폭넓게 할인되는 카드",
+    "ground_truth_ids": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "ground_truth": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "target_name": "신한카드 Discount Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "온라인쇼핑이랑 대형마트 둘 다 많이 쓰고 영화도 자주 봐. 폭넓게 할인되는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "ground_truth": [
+      "2835",
+      "13",
+      "2376"
+    ],
+    "target_name": "신한카드 Discount Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소 할인 좋은 카드 찾는데 대중교통도 같이 챙기고 싶어",
+    "ground_truth_ids": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "ground_truth": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소 할인 좋은 신용카드 찾는데 대중교통도 같이 챙기고 싶어",
+    "ground_truth_ids": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "ground_truth": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 주유소 할인 좋은 카드 찾는데 대중교통도 같이 챙기고 싶어",
+    "ground_truth_ids": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "ground_truth": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소 할인 좋은 카드 찾는데 대중교통도 같이 챙기고 싶어 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "ground_truth": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "고정비(공과금/통신/관리비) 중심으로 줄이면서 편의점도 자주 써",
+    "ground_truth_ids": [
+      "13",
+      "2828",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "2828",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 고정비(공과금/통신/관리비) 중심으로 줄이면서 편의점도 자주 써",
+    "ground_truth_ids": [
+      "13",
+      "2828",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "2828",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "고정비(공과금/통신/관리비) 중심으로 줄이면서 편의점도 자주 써 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2828",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "2828",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "해외 결제랑 공항라운지 되고 국내는 카페/편의점 정도만 가볍게 챙기는 카드",
+    "ground_truth_ids": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "해외 결제랑 공항라운지 되고 국내는 카페/편의점 정도만 가볍게 챙기는 신용카드",
+    "ground_truth_ids": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 해외 결제랑 공항라운지 되고 국내는 카페/편의점 정도만 가볍게 챙기는 카드",
+    "ground_truth_ids": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "해외 결제랑 공항라운지 되고 국내는 카페/편의점 정도만 가볍게 챙기는 카드 추천해줘",
+    "ground_truth_ids": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "2877",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제로 결제 많이 하고 디지털구독도 쓰는데 생활비도 조금은 커버되는 카드",
+    "ground_truth_ids": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "ground_truth": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제로 결제 많이 하고 디지털구독도 쓰는데 생활비도 조금은 커버되는 신용카드",
+    "ground_truth_ids": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "ground_truth": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 간편결제로 결제 많이 하고 디지털구독도 쓰는데 생활비도 조금은 커버되는 카드",
+    "ground_truth_ids": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "ground_truth": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제로 결제 많이 하고 디지털구독도 쓰는데 생활비도 조금은 커버되는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "ground_truth": [
+      "2886",
+      "657",
+      "2885"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "병원/약국이랑 공과금은 꼭, 배달이나 마트는 있으면 좋은 카드",
+    "ground_truth_ids": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "병원/약국이랑 공과금은 꼭, 배달이나 마트는 있으면 좋은 신용카드",
+    "ground_truth_ids": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 병원/약국이랑 공과금은 꼭, 배달이나 마트는 있으면 좋은 카드",
+    "ground_truth_ids": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "병원/약국이랑 공과금은 꼭, 배달이나 마트는 있으면 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "115",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "쇼핑/온라인/백화점/아울렛 중심인데 교통도 살짝 혜택 있으면 좋겠어",
+    "ground_truth_ids": [
+      "2697",
+      "49",
+      "2877"
+    ],
+    "ground_truth": [
+      "2697",
+      "49",
+      "2877"
+    ],
+    "target_name": "현대카드 MX Black Edition2"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 쇼핑/온라인/백화점/아울렛 중심인데 교통도 살짝 혜택 있으면 좋겠어",
+    "ground_truth_ids": [
+      "2697",
+      "49",
+      "2877"
+    ],
+    "ground_truth": [
+      "2697",
+      "49",
+      "2877"
+    ],
+    "target_name": "현대카드 MX Black Edition2"
+  },
+  {
+    "type": "Complex",
+    "query": "쇼핑/온라인/백화점/아울렛 중심인데 교통도 살짝 혜택 있으면 좋겠어 추천해줘",
+    "ground_truth_ids": [
+      "2697",
+      "49",
+      "2877"
+    ],
+    "ground_truth": [
+      "2697",
+      "49",
+      "2877"
+    ],
+    "target_name": "현대카드 MX Black Edition2"
+  },
+  {
+    "type": "Complex",
+    "query": "한 장으로 생활비 전반을 커버하는 무난한 카드 추천",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "한 장으로 생활비 전반을 커버하는 무난한 신용카드 추천",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요약하면 한 장으로 생활비 전반을 커버하는 무난한 카드 추천",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "한 장으로 생활비 전반을 커버하는 무난한 카드 추천 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2759"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  }
+]

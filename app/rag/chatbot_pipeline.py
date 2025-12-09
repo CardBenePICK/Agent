@@ -28,7 +28,8 @@ load_dotenv()
 # ============================================================
 ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 HF_API_KEY = os.getenv("HF_API_KEY") or os.getenv("HF_TOKEN")
-MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct:novita"
+# MODEL_NAME = "meta-llama/Llama-3.1-8B-Instruct:novita"
+MODEL_NAME="google/gemma-2-9b-it:nebius"
 EMBEDDING_MODEL_ID = "BAAI/bge-m3"
 INDEX_NAME = "credit_cards_nested_top100"
 
