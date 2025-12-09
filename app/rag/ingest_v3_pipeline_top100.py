@@ -21,7 +21,7 @@ load_dotenv()
 # ============================================================
 ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
 HF_API_KEY = os.getenv("HF_API_KEY")
-INDEX_NAME = "credit_cards_nested_top100"  # 구조가 바꼈으니 인덱스 이름 변경 권장
+INDEX_NAME = "credit_cards_nested_v2"  # 구조가 바꼈으니 인덱스 이름 변경 권장
 INPUT_FILE = "processed_card_chunks_only_credit_1129.json"
 CHECKPOINT_FILE = "ingest_nested_checkpoint_simple.json"
 CARD_ID_TOP100_FILE = "card_ids_top100.json" # CARD_ID_TOP100 변수명 변경 및 파일 정의

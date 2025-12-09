@@ -4,6 +4,15 @@ from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 from langchain_mcp_adapters.client import MultiServerMCPClient
 
+try:
+    from app.rag.tool.chatbot_tool import search_credit_cards
+except ImportError:
+    # 로컬 테스트 시 경로가 꼬일 경우를 대비한 상대 경로 처리
+    import sys
+    import os
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../')))
+    from rag.tool.chatbot_tool import search_credit_cards
+
 load_dotenv()
 
 # LangSmith 설정
@@ -39,7 +48,7 @@ async def create_agent_app():
     llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
     # 1) tools 설정
-    tools = []
+    tools = [search_credit_cards]
     raw_return_tools = ["get_sale_value"] 
     # 2) MCP 서버 도구를 로드하여 합치기 (이름 중복 제거)
     if client:

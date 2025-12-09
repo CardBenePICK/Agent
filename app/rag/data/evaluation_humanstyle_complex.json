@@ -1,0 +1,902 @@
+[
+  {
+    "type": "Complex",
+    "query": "요즘 공과금이랑 편의점 지출이 큰데 주유소도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금은 꼭 챙기고 싶고 편의점도 중요해. 주유소까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 공과금·편의점·주유소 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금 자동납부 걸어두고 편의점, 주유소도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2559"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2559"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금이랑 편의점은 필수, 주유소은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2330"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2330"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 통신비이랑 관리비 지출이 큰데 배달앱도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "통신비은 꼭 챙기고 싶고 관리비도 중요해. 배달앱까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 통신비·관리비·배달앱 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "769"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "769"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "통신비 자동납부 걸어두고 관리비, 배달앱도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "통신비이랑 관리비은 필수, 배달앱은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "45"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 대중교통이랑 카페 지출이 큰데 편의점도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "49",
+      "39",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "39",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통은 꼭 챙기고 싶고 카페도 중요해. 편의점까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "49",
+      "39",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "39",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 대중교통·카페·편의점 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "2654",
+      "13",
+      "39"
+    ],
+    "ground_truth": [
+      "2654",
+      "13",
+      "39"
+    ],
+    "target_name": "원더카드 2.0 LIFE"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통 자동납부 걸어두고 카페, 편의점도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "49"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "49"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통이랑 카페은 필수, 편의점은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "49",
+      "39",
+      "2697"
+    ],
+    "ground_truth": [
+      "49",
+      "39",
+      "2697"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 대형마트이랑 온라인쇼핑 지출이 큰데 배달도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2820",
+      "115"
+    ],
+    "ground_truth": [
+      "13",
+      "2820",
+      "115"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "대형마트은 꼭 챙기고 싶고 온라인쇼핑도 중요해. 배달까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "13",
+      "2820",
+      "115"
+    ],
+    "ground_truth": [
+      "13",
+      "2820",
+      "115"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 대형마트·온라인쇼핑·배달 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "13",
+      "2820",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2820",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "대형마트 자동납부 걸어두고 온라인쇼핑, 배달도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "115"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "115"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "대형마트이랑 온라인쇼핑은 필수, 배달은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "13",
+      "2820",
+      "115"
+    ],
+    "ground_truth": [
+      "13",
+      "2820",
+      "115"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 병원이랑 약국 지출이 큰데 공과금도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2692"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2692"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "병원은 꼭 챙기고 싶고 약국도 중요해. 공과금까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2692"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2692"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 병원·약국·공과금 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "13",
+      "2885",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2885",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "병원 자동납부 걸어두고 약국, 공과금도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "13",
+      "2559"
+    ],
+    "ground_truth": [
+      "2330",
+      "13",
+      "2559"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "병원이랑 약국은 필수, 공과금은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2692"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2692"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 디지털구독이랑 간편결제 지출이 큰데 온라인쇼핑도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "2886",
+      "2687",
+      "2820"
+    ],
+    "ground_truth": [
+      "2886",
+      "2687",
+      "2820"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "디지털구독은 꼭 챙기고 싶고 간편결제도 중요해. 온라인쇼핑까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "2886",
+      "2687",
+      "2820"
+    ],
+    "ground_truth": [
+      "2886",
+      "2687",
+      "2820"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 디지털구독·간편결제·온라인쇼핑 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "2886",
+      "2885",
+      "2687"
+    ],
+    "ground_truth": [
+      "2886",
+      "2885",
+      "2687"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "디지털구독 자동납부 걸어두고 간편결제, 온라인쇼핑도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "2346",
+      "2441"
+    ],
+    "ground_truth": [
+      "2330",
+      "2346",
+      "2441"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "디지털구독이랑 간편결제은 필수, 온라인쇼핑은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "2886",
+      "2687",
+      "2820"
+    ],
+    "ground_truth": [
+      "2886",
+      "2687",
+      "2820"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 주유소이랑 대중교통 지출이 큰데 주차도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2559"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2559"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소은 꼭 챙기고 싶고 대중교통도 중요해. 주차까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2559"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2559"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 주유소·대중교통·주차 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "ground_truth": [
+      "13",
+      "2559",
+      "121"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소 자동납부 걸어두고 대중교통, 주차도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "2559",
+      "13"
+    ],
+    "ground_truth": [
+      "2330",
+      "2559",
+      "13"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소이랑 대중교통은 필수, 주차은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "13",
+      "49",
+      "2559"
+    ],
+    "ground_truth": [
+      "13",
+      "49",
+      "2559"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 카페이랑 영화 지출이 큰데 외식도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "769",
+      "2544",
+      "666"
+    ],
+    "ground_truth": [
+      "769",
+      "2544",
+      "666"
+    ],
+    "target_name": "가온올림카드(실속형)"
+  },
+  {
+    "type": "Complex",
+    "query": "카페은 꼭 챙기고 싶고 영화도 중요해. 외식까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "769",
+      "2544",
+      "666"
+    ],
+    "ground_truth": [
+      "769",
+      "2544",
+      "666"
+    ],
+    "target_name": "가온올림카드(실속형)"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 카페·영화·외식 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "2544",
+      "666",
+      "769"
+    ],
+    "ground_truth": [
+      "2544",
+      "666",
+      "769"
+    ],
+    "target_name": "zgm.play카드"
+  },
+  {
+    "type": "Complex",
+    "query": "카페 자동납부 걸어두고 영화, 외식도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "769",
+      "2441",
+      "2330"
+    ],
+    "ground_truth": [
+      "769",
+      "2441",
+      "2330"
+    ],
+    "target_name": "가온올림카드(실속형)"
+  },
+  {
+    "type": "Complex",
+    "query": "카페이랑 영화은 필수, 외식은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "769",
+      "2544",
+      "666"
+    ],
+    "ground_truth": [
+      "769",
+      "2544",
+      "666"
+    ],
+    "target_name": "가온올림카드(실속형)"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 해외이랑 공항라운지 지출이 큰데 항공도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "ground_truth": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "해외은 꼭 챙기고 싶고 공항라운지도 중요해. 항공까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "ground_truth": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 해외·공항라운지·항공 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "49",
+      "2902",
+      "2674"
+    ],
+    "ground_truth": [
+      "49",
+      "2902",
+      "2674"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "해외 자동납부 걸어두고 공항라운지, 항공도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "ground_truth": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "해외이랑 공항라운지은 필수, 항공은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "ground_truth": [
+      "49",
+      "2674",
+      "2553"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 보험이랑 세금 지출이 큰데 공과금도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "보험은 꼭 챙기고 싶고 세금도 중요해. 공과금까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 보험·세금·공과금 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "13",
+      "2835",
+      "2885"
+    ],
+    "ground_truth": [
+      "13",
+      "2835",
+      "2885"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "보험 자동납부 걸어두고 세금, 공과금도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "2559",
+      "13"
+    ],
+    "ground_truth": [
+      "2330",
+      "2559",
+      "13"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "보험이랑 세금은 필수, 공과금은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "ground_truth": [
+      "13",
+      "2330",
+      "2835"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 교육이랑 학원 지출이 큰데 서점도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "115",
+      "2692",
+      "227"
+    ],
+    "ground_truth": [
+      "115",
+      "2692",
+      "227"
+    ],
+    "target_name": "굿데이올림카드"
+  },
+  {
+    "type": "Complex",
+    "query": "교육은 꼭 챙기고 싶고 학원도 중요해. 서점까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "115",
+      "2692",
+      "227"
+    ],
+    "ground_truth": [
+      "115",
+      "2692",
+      "227"
+    ],
+    "target_name": "굿데이올림카드"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 교육·학원·서점 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "227",
+      "2735",
+      "2885"
+    ],
+    "ground_truth": [
+      "227",
+      "2735",
+      "2885"
+    ],
+    "target_name": "CLUB SK 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "교육 자동납부 걸어두고 학원, 서점도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "115",
+      "2559"
+    ],
+    "ground_truth": [
+      "2330",
+      "115",
+      "2559"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "교육이랑 학원은 필수, 서점은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "115",
+      "2692",
+      "227"
+    ],
+    "ground_truth": [
+      "115",
+      "2692",
+      "227"
+    ],
+    "target_name": "굿데이올림카드"
+  },
+  {
+    "type": "Complex",
+    "query": "요즘 미용이랑 뷰티 지출이 큰데 카페도 자주 써. 이 세 가지 혜택 좋은 카드 추천해줘",
+    "ground_truth_ids": [
+      "49",
+      "666",
+      "39"
+    ],
+    "ground_truth": [
+      "49",
+      "666",
+      "39"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "미용은 꼭 챙기고 싶고 뷰티도 중요해. 카페까지 있으면 더 좋은 카드 있을까?",
+    "ground_truth_ids": [
+      "49",
+      "666",
+      "39"
+    ],
+    "ground_truth": [
+      "49",
+      "666",
+      "39"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 줄이려고 하는데 미용·뷰티·카페 위주로 할인되는 카드 추천 부탁해",
+    "ground_truth_ids": [
+      "666",
+      "45",
+      "2544"
+    ],
+    "ground_truth": [
+      "666",
+      "45",
+      "2544"
+    ],
+    "target_name": "올바른 FLEX 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "미용 자동납부 걸어두고 뷰티, 카페도 많이 써. 실속 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330",
+      "45",
+      "2559"
+    ],
+    "ground_truth": [
+      "2330",
+      "45",
+      "2559"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "미용이랑 뷰티은 필수, 카페은 있으면 좋은 정도야. 조건 맞는 카드 알려줘",
+    "ground_truth_ids": [
+      "49",
+      "666",
+      "39"
+    ],
+    "ground_truth": [
+      "49",
+      "666",
+      "39"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  }
+]

@@ -171,62 +171,62 @@ class LLMClient:
             print(f"❌ [LLM Error] {e}")
             return '{"recommendation_summary": {"recommended_card": "Error", "selection_reason": "LLM Error"}, "card_comparison_list": []}'
 
-# ============================================================
-# [Module 2] 챗봇용 파이프라인 (Interactive)
-# ============================================================
+# # ============================================================
+# # [Module 2] 챗봇용 파이프라인 (Interactive)
+# # ============================================================
 
-class ChatbotPipeline:
-    def __init__(self):
-        self.retriever = ESMultiRetriever()
+# class ChatbotPipeline:
+#     def __init__(self):
+#         self.retriever = ESMultiRetriever()
 
-    @traceable(run_type="tool", name="Query_Analyzer")
-    def _analyze_query(self, user_query: str) -> Dict:
-        """LLM을 사용해 사용자 질문에서 의도(키워드, 금액) 추출"""
-        prompt = f"""
-        사용자 질문을 분석하여 JSON으로 반환하세요.
-        질문: "{user_query}"
+#     @traceable(run_type="tool", name="Query_Analyzer")
+#     def _analyze_query(self, user_query: str) -> Dict:
+#         """LLM을 사용해 사용자 질문에서 의도(키워드, 금액) 추출"""
+#         prompt = f"""
+#         사용자 질문을 분석하여 JSON으로 반환하세요.
+#         질문: "{user_query}"
         
-        출력 필드:
-        - keywords: 혜택 관련 핵심 단어 리스트 (예: ["통신", "스타벅스"])
-        - spend: 사용자가 언급한 월 사용 금액(숫자). 언급 없으면 0.
+#         출력 필드:
+#         - keywords: 혜택 관련 핵심 단어 리스트 (예: ["통신", "스타벅스"])
+#         - spend: 사용자가 언급한 월 사용 금액(숫자). 언급 없으면 0.
         
-        예시:
-        {{"keywords": ["편의점", "교통"], "spend": 300000}}
-        """
-        try:
-            res_str = LLMClient.call_api([{"role": "user", "content": prompt}])
-            return json.loads(res_str)
-        except:
-            return {"keywords": [user_query], "spend": 0}
+#         예시:
+#         {{"keywords": ["편의점", "교통"], "spend": 300000}}
+#         """
+#         try:
+#             res_str = LLMClient.call_api([{"role": "user", "content": prompt}])
+#             return json.loads(res_str)
+#         except:
+#             return {"keywords": [user_query], "spend": 0}
 
-    @traceable(run_type="chain", name="Chatbot_Pipeline") # LangSmith: 전체 체인
-    def run(self, user_query: str) -> Dict:
-        # 1. 분석
-        intent = self._analyze_query(user_query)
-        keywords = intent.get("keywords", [])
-        user_spend = intent.get("spend") or 500000
+#     @traceable(run_type="chain", name="Chatbot_Pipeline") # LangSmith: 전체 체인
+#     def run(self, user_query: str) -> Dict:
+#         # 1. 분석
+#         intent = self._analyze_query(user_query)
+#         keywords = intent.get("keywords", [])
+#         user_spend = intent.get("spend") or 500000
         
-        logger.info(f"[Chatbot] Query: {user_query} -> Intent: {intent}")
+#         logger.info(f"[Chatbot] Query: {user_query} -> Intent: {intent}")
 
-        # 2. 검색
-        candidates = self.retriever.search_by_coverage(keywords, size=100)
+#         # 2. 검색
+#         candidates = self.retriever.search_by_coverage(keywords, size=100)
 
-        # 3. 계산 및 정렬
-        scored = []
-        for cand in candidates:
-            src = cand["_source"]
-            res = BenefitCalculator.calculate(src, user_spend, keywords)
-            scored.append({
-                "card_name": src["card_name"],
-                "score": res["score"],
-                "info": res["matched_info"],
-                "summary": src["benefits"][0]["summary"] if src["benefits"] else ""
-            })
+#         # 3. 계산 및 정렬
+#         scored = []
+#         for cand in candidates:
+#             src = cand["_source"]
+#             res = BenefitCalculator.calculate(src, user_spend, keywords)
+#             scored.append({
+#                 "card_name": src["card_name"],
+#                 "score": res["score"],
+#                 "info": res["matched_info"],
+#                 "summary": src["benefits"][0]["summary"] if src["benefits"] else ""
+#             })
         
-        scored.sort(key=lambda x: x["score"], reverse=True)
-        top_3 = scored[:3]
+#         scored.sort(key=lambda x: x["score"], reverse=True)
+#         top_3 = scored[:3]
 
-        return {"top_3": top_3, "raw_intent": intent}
+#         return {"top_3": top_3, "raw_intent": intent}
 
 # ============================================================
 # [Module 3] ML/Persona 파이프라인 (Batch/Survey)
@@ -322,7 +322,7 @@ class MLPersonaPipeline:
 # 인스턴스 생성
 if __name__ == "__main__":
     ml_pipeline = MLPersonaPipeline()
-    chatbot_pipeline = ChatbotPipeline() # 챗봇 인스턴스도 생성 (필요시 사용)
+    # chatbot_pipeline = ChatbotPipeline() # 챗봇 인스턴스도 생성 (필요시 사용)
 
     # 테스트 실행 (예시)
     # result = ml_pipeline.run(cluster_id=0, category_codes=["OTT", "공항라운지"])
@@ -331,7 +331,7 @@ if __name__ == "__main__":
 # ============================================================
 # 인스턴스 생성
 # ============================================================
-chatbot_pipeline = ChatbotPipeline()
+# chatbot_pipeline = ChatbotPipeline()
 ml_pipeline = MLPersonaPipeline()
 
 # import os

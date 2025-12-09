@@ -1,0 +1,1102 @@
+[
+  {
+    "type": "Complex",
+    "query": "공과금, 편의점, 병원/약국, 생활, 온라인쇼핑 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "13"
+    ],
+    "ground_truth": [
+      "13"
+    ],
+    "target_name": "신한카드 Mr.Life"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통, 통신, 영화, 택시, 결제일할인 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "51"
+    ],
+    "ground_truth": [
+      "51"
+    ],
+    "target_name": "삼성카드 taptap O"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 백화점, 주유소, 카페, 편의점 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "49"
+    ],
+    "ground_truth": [
+      "49"
+    ],
+    "target_name": "삼성카드 & MILEAGE PLATINUM (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 디지털구독, 아파트, 관리비, 통신 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2885"
+    ],
+    "ground_truth": [
+      "2885"
+    ],
+    "target_name": "삼성 iD SELECT ALL 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제, 푸드, 통신, 디지털구독, 음식점 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2441"
+    ],
+    "ground_truth": [
+      "2441"
+    ],
+    "target_name": "KB국민 My WE:SH 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제, 디지털구독, 영상, 스트리밍, 디지털 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2862"
+    ],
+    "ground_truth": [
+      "2862"
+    ],
+    "target_name": "MG+ S 하나카드"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 공항라운지, 프리미엄 서비스, 트래블, 패션 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2663"
+    ],
+    "ground_truth": [
+      "2663"
+    ],
+    "target_name": "American Express® Gold Card Edition2"
+  },
+  {
+    "type": "Complex",
+    "query": "공과금, 대중교통, 통신, 배달앱, 보험사 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2330"
+    ],
+    "ground_truth": [
+      "2330"
+    ],
+    "target_name": "LOCA 365 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "쿠팡, 쿠팡이츠, 쿠팡플레이, 쿠팡캐시까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2609"
+    ],
+    "ground_truth": [
+      "2609"
+    ],
+    "target_name": "쿠팡 와우카드"
+  },
+  {
+    "type": "Complex",
+    "query": "모든가맹점, 온라인쇼핑, 영화까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2376"
+    ],
+    "ground_truth": [
+      "2376"
+    ],
+    "target_name": "삼성 iD SIMPLE 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제, 디지털구독, 마트/편의점, 온라인, 결제일할인까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "657"
+    ],
+    "ground_truth": [
+      "657"
+    ],
+    "target_name": "taptap DIGITAL"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 디지털구독, 오늘도, 음식점, 카페 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2759"
+    ],
+    "ground_truth": [
+      "2759"
+    ],
+    "target_name": "신한카드 처음(ANNIVERSE)"
+  },
+  {
+    "type": "Complex",
+    "query": "쇼핑, 교통, 생활, 영화, Time까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2835"
+    ],
+    "ground_truth": [
+      "2835"
+    ],
+    "target_name": "신한카드 Discount Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 간편결제, 온라인 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2719"
+    ],
+    "ground_truth": [
+      "2719"
+    ],
+    "target_name": "카드의정석 EVERY DISCOUNT"
+  },
+  {
+    "type": "Complex",
+    "query": "모든가맹점, 주유, 영화, 모든, 빅포인트 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "52"
+    ],
+    "ground_truth": [
+      "52"
+    ],
+    "target_name": "삼성카드 taptap S"
+  },
+  {
+    "type": "Complex",
+    "query": "프리미엄 서비스, 제한, 없이, 온라인몰, 대형마트까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2844"
+    ],
+    "ground_truth": [
+      "2844"
+    ],
+    "target_name": "현대카드 ZERO Up"
+  },
+  {
+    "type": "Complex",
+    "query": "일반음식점, 쇼핑, 간편결제, 생활, 디지털구독 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2886"
+    ],
+    "ground_truth": [
+      "2886"
+    ],
+    "target_name": "삼성 iD SELECT ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "수수료우대, 해외이용, 공항라운지, 생활, 쇼핑까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2685"
+    ],
+    "ground_truth": [
+      "2685"
+    ],
+    "target_name": "WE:SH Travel"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 수수료우대, 공항라운지, SKYPASS, 해외수수료 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2553"
+    ],
+    "ground_truth": [
+      "2553"
+    ],
+    "target_name": "카드의정석 EVERY MILE SKYPASS"
+  },
+  {
+    "type": "Complex",
+    "query": "카페, 생활, 영화, 쇼핑, 간편결제까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "666"
+    ],
+    "ground_truth": [
+      "666"
+    ],
+    "target_name": "올바른 FLEX 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "주유, 자동차/하이패스, 편의점, 카페, 택시 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "39"
+    ],
+    "ground_truth": [
+      "39"
+    ],
+    "target_name": "신한카드 Deep Oil"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 대한항공, 택시, 카페, 공항 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "1909"
+    ],
+    "ground_truth": [
+      "1909"
+    ],
+    "target_name": "THE 1 (스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "모든가맹점, 온라인쇼핑, 어디서나, 결제일, 할인국내 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2261"
+    ],
+    "ground_truth": [
+      "2261"
+    ],
+    "target_name": "LOCA LIKIT 1.2"
+  },
+  {
+    "type": "Complex",
+    "query": "수수료우대, 해외이용, 삼성페이, 공항라운지, 디지털구독 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2676"
+    ],
+    "ground_truth": [
+      "2676"
+    ],
+    "target_name": "삼성 iD GLOBAL 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "푸드, 교통, 통신, 영화, 테마파크 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "769"
+    ],
+    "ground_truth": [
+      "769"
+    ],
+    "target_name": "가온올림카드(실속형)"
+  },
+  {
+    "type": "Complex",
+    "query": "온라인쇼핑, 쇼핑, 간편결제, 주유, 카페까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2687"
+    ],
+    "ground_truth": [
+      "2687"
+    ],
+    "target_name": "카드의정석 SHOPPING+"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 프리미엄 서비스, 마일리지, AMEX, PLATINUM까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "466"
+    ],
+    "ground_truth": [
+      "466"
+    ],
+    "target_name": "신한카드 Air One"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 공항라운지, 디지털구독, 카페, 택시 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2657"
+    ],
+    "ground_truth": [
+      "2657"
+    ],
+    "target_name": "JADE Classic"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통, 교통, 주유소, 통신, 패밀리레스토랑 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2559"
+    ],
+    "ground_truth": [
+      "2559"
+    ],
+    "target_name": "K-패스 (신용)"
+  },
+  {
+    "type": "Complex",
+    "query": "주유, 대형마트, 통신, 교통, 푸드 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "115"
+    ],
+    "ground_truth": [
+      "115"
+    ],
+    "target_name": "굿데이올림카드"
+  },
+  {
+    "type": "Complex",
+    "query": "제한, 없이, 금액의 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2646"
+    ],
+    "ground_truth": [
+      "2646"
+    ],
+    "target_name": "현대카드ZERO Edition3(할인형)"
+  },
+  {
+    "type": "Complex",
+    "query": "기본적립, 롯데멤버스, L.POINT, 특별적립, 브랜드 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2823"
+    ],
+    "ground_truth": [
+      "2823"
+    ],
+    "target_name": "롯데멤버스 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 패밀리레스토랑, 프리미엄 서비스, 모든, 스카이패스 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "54"
+    ],
+    "ground_truth": [
+      "54"
+    ],
+    "target_name": "삼성카드 스페셜마일리지(스카이패스)"
+  },
+  {
+    "type": "Complex",
+    "query": "유치원, 학원, 병원/약국, 여행/숙박, 바우처까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2692"
+    ],
+    "ground_truth": [
+      "2692"
+    ],
+    "target_name": "현대카드 Summit"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 생활, 공항라운지, 리워드, 마이신한포인트형 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2807"
+    ],
+    "ground_truth": [
+      "2807"
+    ],
+    "target_name": "신한카드 The BEST-X"
+  },
+  {
+    "type": "Complex",
+    "query": "무이자할부, 할부 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2707"
+    ],
+    "ground_truth": [
+      "2707"
+    ],
+    "target_name": "디지로카 Las Vegas"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 프리미엄 서비스, 멤버십리워즈, 적립온라인쇼핑, 결제일할인 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "736"
+    ],
+    "ground_truth": [
+      "736"
+    ],
+    "target_name": "American Express® Reserve"
+  },
+  {
+    "type": "Complex",
+    "query": "일상, 생활비, 건당, 결제금액별, 결제금액 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2666"
+    ],
+    "ground_truth": [
+      "2666"
+    ],
+    "target_name": "신한카드 Point Plan"
+  },
+  {
+    "type": "Complex",
+    "query": "M포인트, 금액, 온라인, 쇼핑몰・외식・해외, 긴급적립 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2669"
+    ],
+    "ground_truth": [
+      "2669"
+    ],
+    "target_name": "현대카드 M"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 무이자할부, 어디서나, 즉시, LOCA 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2632"
+    ],
+    "ground_truth": [
+      "2632"
+    ],
+    "target_name": "디지로카 London"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 디지털구독, 카페, 통신, 쇼핑 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "45"
+    ],
+    "ground_truth": [
+      "45"
+    ],
+    "target_name": "American Express Blue"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 공항라운지, 스카이패스, 마일리지, 인천공항까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2237"
+    ],
+    "ground_truth": [
+      "2237"
+    ],
+    "target_name": "하나 스카이패스 아멕스 플래티늄 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "호텔, 공항라운지, 힐튼, 아너스, 전세계까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2786"
+    ],
+    "ground_truth": [
+      "2786"
+    ],
+    "target_name": "힐튼 아너스 아멕스 프리미엄"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 분기별, 따라까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2848"
+    ],
+    "ground_truth": [
+      "2848"
+    ],
+    "target_name": "카드의정석2"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 공항라운지, 프리미엄 서비스, 트래블・패션, 뷰티까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2662"
+    ],
+    "ground_truth": [
+      "2662"
+    ],
+    "target_name": "American Express® Green Card Edition2"
+  },
+  {
+    "type": "Complex",
+    "query": "디지털구독, 일상, 생활비, 필수, 여가 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2731"
+    ],
+    "ground_truth": [
+      "2731"
+    ],
+    "target_name": "신한카드 Point Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "생활비 전반 혜택 좋은 카드 추천",
+    "ground_truth_ids": [
+      "2779"
+    ],
+    "ground_truth": [
+      "2779"
+    ],
+    "target_name": "IBK포인트(신용)"
+  },
+  {
+    "type": "Complex",
+    "query": "모든가맹점, 생활, 디지털구독, LIVING, 할인온라인쇼핑 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2482"
+    ],
+    "ground_truth": [
+      "2482"
+    ],
+    "target_name": "I-ALL"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 바우처, 공항, 프리미엄 서비스, 마일리지까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2737"
+    ],
+    "ground_truth": [
+      "2737"
+    ],
+    "target_name": "the Red (항공 마일리지형)"
+  },
+  {
+    "type": "Complex",
+    "query": "Discount, 일상영역, 음식점, 주점, 온라인까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2699"
+    ],
+    "ground_truth": [
+      "2699"
+    ],
+    "target_name": "카드의정석 TEN"
+  },
+  {
+    "type": "Complex",
+    "query": "생활영역 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2851"
+    ],
+    "ground_truth": [
+      "2851"
+    ],
+    "target_name": "우리카드 7CORE"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 공항라운지, 공항, 생활, 프리미엄 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2902"
+    ],
+    "ground_truth": [
+      "2902"
+    ],
+    "target_name": "the OPUS silver"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 온라인쇼핑, 이용금액의, 특별, 온라인까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2778"
+    ],
+    "ground_truth": [
+      "2778"
+    ],
+    "target_name": "IBK포인트3.8(신용)"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 프리미엄 서비스, 기본적립, \u001a롯데멤버스, L.POINT\u001a 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2824"
+    ],
+    "ground_truth": [
+      "2824"
+    ],
+    "target_name": "롯데멤버스 카드 프리미엄"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 온라인쇼핑, 백화점, 카페, 베이커리까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2697"
+    ],
+    "ground_truth": [
+      "2697"
+    ],
+    "target_name": "현대카드 MX Black Edition2"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 디지털구독, 카페, 공항라운지, 프리미엄 서비스 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2460"
+    ],
+    "ground_truth": [
+      "2460"
+    ],
+    "target_name": "THE iD. PLATINUM(포인트)"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제, 온라인 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2689"
+    ],
+    "ground_truth": [
+      "2689"
+    ],
+    "target_name": "카드의정석 EVERY POINT"
+  },
+  {
+    "type": "Complex",
+    "query": "영화, 카페, 패스트푸드, 생활, 온라인 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2544"
+    ],
+    "ground_truth": [
+      "2544"
+    ],
+    "target_name": "zgm.play카드"
+  },
+  {
+    "type": "Complex",
+    "query": "해외이용, 리조트, 일본, Hoshino, Resort 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2855"
+    ],
+    "ground_truth": [
+      "2855"
+    ],
+    "target_name": "Haru(Hoshino Resorts)"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 기차, 영화, 카페, 금융까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "772"
+    ],
+    "ground_truth": [
+      "772"
+    ],
+    "target_name": "BLISS.5 카드(마일리지)"
+  },
+  {
+    "type": "Complex",
+    "query": "점심, 배달앱, 대중교통, 편의점, 온라인쇼핑까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2346"
+    ],
+    "ground_truth": [
+      "2346"
+    ],
+    "target_name": "BC 바로 클리어 플러스"
+  },
+  {
+    "type": "Complex",
+    "query": "모든가맹점, 공항라운지, Discount, 무료 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2655"
+    ],
+    "ground_truth": [
+      "2655"
+    ],
+    "target_name": "DA카드의정석Ⅱ"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 여행/숙박, 공항라운지, 카페, 베이커리까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "37"
+    ],
+    "ground_truth": [
+      "37"
+    ],
+    "target_name": "신한카드 The BEST-F"
+  },
+  {
+    "type": "Complex",
+    "query": "주유, 대중교통, 카페, Daily, 리터당까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2688"
+    ],
+    "ground_truth": [
+      "2688"
+    ],
+    "target_name": "카드의정석 I&U+"
+  },
+  {
+    "type": "Complex",
+    "query": "프리미엄 서비스, 금액, 일반음식점, 배달, 커피전문점 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2878"
+    ],
+    "ground_truth": [
+      "2878"
+    ],
+    "target_name": "현대카드D"
+  },
+  {
+    "type": "Complex",
+    "query": "수수료우대, 공항라운지/PP, NH포인트, 무관, 국제까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2846"
+    ],
+    "ground_truth": [
+      "2846"
+    ],
+    "target_name": "클래시 트래블카드"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 프리미엄, 프리미엄 서비스, 마일리지, 보너스 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2711"
+    ],
+    "ground_truth": [
+      "2711"
+    ],
+    "target_name": "대한항공카드 300"
+  },
+  {
+    "type": "Complex",
+    "query": "공항, 프리미엄 서비스, M포인트, 여행, 영역 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2753"
+    ],
+    "ground_truth": [
+      "2753"
+    ],
+    "target_name": "the Green Edition3"
+  },
+  {
+    "type": "Complex",
+    "query": "해외이용, 수수료우대, 프리미엄 서비스, 제한, 없이까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2882"
+    ],
+    "ground_truth": [
+      "2882"
+    ],
+    "target_name": "현대카드T"
+  },
+  {
+    "type": "Complex",
+    "query": "주유, 통신, 편의점, 온라인쇼핑, 정비까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2828"
+    ],
+    "ground_truth": [
+      "2828"
+    ],
+    "target_name": "삼성 iD STATION 카드 (SK에너지)"
+  },
+  {
+    "type": "Complex",
+    "query": "프리미엄, Easy, Auto, 모드, 많이 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "634"
+    ],
+    "ground_truth": [
+      "634"
+    ],
+    "target_name": "Easy all 티타늄카드"
+  },
+  {
+    "type": "Complex",
+    "query": "배달앱, 대중교통, 카페, 편의점, 자동이체 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2654"
+    ],
+    "ground_truth": [
+      "2654"
+    ],
+    "target_name": "원더카드 2.0 LIFE"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 온라인쇼핑, 어디서나, 결제일, 온라인까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2633"
+    ],
+    "ground_truth": [
+      "2633"
+    ],
+    "target_name": "디지로카 Paris"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 많이, 쓰는, 영역, 자동 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2235"
+    ],
+    "ground_truth": [
+      "2235"
+    ],
+    "target_name": "삼성 iD ON 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 간편결제, 해외이용, 항공권, 면세점 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2529"
+    ],
+    "ground_truth": [
+      "2529"
+    ],
+    "target_name": "트래블로그 신용카드"
+  },
+  {
+    "type": "Complex",
+    "query": "주유소, 생활, 대형마트, 학원, 멤버십포인트 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "227"
+    ],
+    "ground_truth": [
+      "227"
+    ],
+    "target_name": "CLUB SK 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "간편결제, 온라인, 가능까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2427"
+    ],
+    "ground_truth": [
+      "2427"
+    ],
+    "target_name": "zgm.the pay카드"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 공항라운지, 공항, 카페, 프리미엄 서비스까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2674"
+    ],
+    "ground_truth": [
+      "2674"
+    ],
+    "target_name": "I-Mileage (대한항공)"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 항공마일리지, 프리미엄, 쿠폰서비스, 대한항공 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "131"
+    ],
+    "ground_truth": [
+      "131"
+    ],
+    "target_name": "BeV V카드(스카이패스형)"
+  },
+  {
+    "type": "Complex",
+    "query": "디지털구독, 카페, 간편결제, 이용요금, 스트리밍 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2428"
+    ],
+    "ground_truth": [
+      "2428"
+    ],
+    "target_name": "zgm.streaming카드"
+  },
+  {
+    "type": "Complex",
+    "query": "학원, 생활, 영화, 학원비, 생활비까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2735"
+    ],
+    "ground_truth": [
+      "2735"
+    ],
+    "target_name": "신한카드 Edu Plan+"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 국내외가맹점, 간편결제, 금융, 프리미엄까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2451"
+    ],
+    "ground_truth": [
+      "2451"
+    ],
+    "target_name": "HERITAGE Smart [대한항공 마일리지형]"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 쇼핑, 골프, 카페, 택시 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2877"
+    ],
+    "ground_truth": [
+      "2877"
+    ],
+    "target_name": "MG+ BLACK 하나카드"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 공항라운지, 주유, 택시, 디지털구독 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2703"
+    ],
+    "ground_truth": [
+      "2703"
+    ],
+    "target_name": "JADE Prime"
+  },
+  {
+    "type": "Complex",
+    "query": "주유, 통신, 편의점, 온라인쇼핑, GS칼텍스에서 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2827"
+    ],
+    "ground_truth": [
+      "2827"
+    ],
+    "target_name": "삼성 iD STATION 카드 (GS칼텍스)"
+  },
+  {
+    "type": "Complex",
+    "query": "프리미엄 서비스, 금액, 영역, 일반음식점, 주유 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2883"
+    ],
+    "ground_truth": [
+      "2883"
+    ],
+    "target_name": "현대카드Z everyday"
+  },
+  {
+    "type": "Complex",
+    "query": "주유, 쇼핑, 마트/편의점, 택시, 정비 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "16"
+    ],
+    "ground_truth": [
+      "16"
+    ],
+    "target_name": "신한카드 RPM+ Platinum#"
+  },
+  {
+    "type": "Complex",
+    "query": "프리미엄 서비스, 페이북, 머니, 매일, 국외까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2644"
+    ],
+    "ground_truth": [
+      "2644"
+    ],
+    "target_name": "GOAT BC 바로카드"
+  },
+  {
+    "type": "Complex",
+    "query": "대한항공, 프리미엄, 프리미엄 서비스, 마일리지, 보너스 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "2710"
+    ],
+    "ground_truth": [
+      "2710"
+    ],
+    "target_name": "대한항공카드 120"
+  },
+  {
+    "type": "Complex",
+    "query": "공항라운지, 금융, 이용가맹점, NH포인트, 영역 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "635"
+    ],
+    "ground_truth": [
+      "635"
+    ],
+    "target_name": "올바른 NEW HAVE카드"
+  },
+  {
+    "type": "Complex",
+    "query": "항공마일리지, 공항라운지, 웰컴기프트, 싱가포르항공, 크리스플라이어 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2592"
+    ],
+    "ground_truth": [
+      "2592"
+    ],
+    "target_name": "싱가포르항공 크리스플라이어 더 베스트 신한카드"
+  },
+  {
+    "type": "Complex",
+    "query": "바우처, 생활, 공항라운지, 프리미엄 서비스, GIFT까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2461"
+    ],
+    "ground_truth": [
+      "2461"
+    ],
+    "target_name": "THE iD. TITANIUM(포인트)"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 모든가맹점, 많이, 쓰는, 영역까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "2234"
+    ],
+    "ground_truth": [
+      "2234"
+    ],
+    "target_name": "삼성 iD ALL 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "생활, 생활영역에서, 병원, 의원, 관리비 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2904"
+    ],
+    "ground_truth": [
+      "2904"
+    ],
+    "target_name": "토스뱅크 하나카드 Day"
+  },
+  {
+    "type": "Complex",
+    "query": "대중교통, 통신, 주유소, 영화, 테마파크 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "121"
+    ],
+    "ground_truth": [
+      "121"
+    ],
+    "target_name": "다담카드"
+  },
+  {
+    "type": "Complex",
+    "query": "국내외가맹점, 간편결제, 쇼핑, 배달앱, 온라인쇼핑 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2820"
+    ],
+    "ground_truth": [
+      "2820"
+    ],
+    "target_name": "원더카드 2.0 FREE+"
+  },
+  {
+    "type": "Complex",
+    "query": "프리미엄 서비스, 금액, 주유소, 충전소, 차량 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2880"
+    ],
+    "ground_truth": [
+      "2880"
+    ],
+    "target_name": "현대카드O"
+  },
+  {
+    "type": "Complex",
+    "query": "수수료우대, 온라인 여행사, 공항라운지, 프리미엄 서비스, 해외결제 할인/적립을 같이 누릴 수 있는 카드 추천",
+    "ground_truth_ids": [
+      "2593"
+    ],
+    "ground_truth": [
+      "2593"
+    ],
+    "target_name": "zgm.일본여행중 카드"
+  },
+  {
+    "type": "Complex",
+    "query": "네이버페이, 카페, 일상팩, 온라인, 간편결제까지 한 번에 챙길 수 있는 카드",
+    "ground_truth_ids": [
+      "458"
+    ],
+    "ground_truth": [
+      "458"
+    ],
+    "target_name": "네이버페이 taptap"
+  },
+  {
+    "type": "Complex",
+    "query": "항공마일리지, 생활, 프리미엄, 대한항공, 아시아나항공 혜택 다 있는 카드 추천해줘",
+    "ground_truth_ids": [
+      "12"
+    ],
+    "ground_truth": [
+      "12"
+    ],
+    "target_name": "신한카드 Air Platinum#"
+  }
+]
